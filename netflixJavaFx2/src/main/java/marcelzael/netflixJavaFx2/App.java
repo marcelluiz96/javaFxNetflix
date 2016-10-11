@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import connector.HibernateUtil;
+import dao.MidiaHibernateDAO;
 import entity.Midia;
 
 /**
@@ -32,19 +33,28 @@ public class App
 //        CriteriaQuery<Midia> cq = cb.createQuery(Midia.class);
 //        Root<Midia> root = cq.from(Midia.class);
 //        
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        
-//        
-        Midia midia = new Midia();
-        midia.setNome("huhuhuTeste");
-       
-        Session session = sessionFactory.openSession();
-        Transaction tx1 = session.beginTransaction();
         
-//        session.save(midia);
-        session.persist(midia);
-        tx1.commit();
-        session.flush();
+//        
+//        
+        
+        
+        Midia midia = new Midia();
+        midia.setNome("CHUPA ESSE GENERIC DAO MULEQUE");
+//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        Session session = sessionFactory.openSession();
+//        session.persist(midia);
+        
+        MidiaHibernateDAO miDao = new MidiaHibernateDAO();
+        miDao.persist(midia);
+        
+        
+        
+//        Transaction tx1 = session.beginTransaction();
+//        
+////        session.save(midia);
+//        session.persist(midia);
+//        tx1.commit();
+//        session.flush();
         
         System.out.println("que nojo");
     }
