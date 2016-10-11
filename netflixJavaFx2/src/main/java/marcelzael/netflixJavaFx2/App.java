@@ -3,8 +3,16 @@ package marcelzael.netflixJavaFx2;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import connector.Conexao;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import connector.HibernateUtil;
+import entity.Midia;
 
 /**
  * Hello world!
@@ -15,10 +23,29 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-        Conexao c = new Conexao("PostgreSql", "localhost", "5432", "netflix", "postgres", "admin");
-        c.conect();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("NONJTAPersistenceUnit");
-        EntityManager em = emf.createEntityManager();
+//        Conexao c = new Conexao("PostgreSql", "localhost", "5432", "netflix", "postgres", "admin");
+//        c.conect();
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("NONJTAPersistenceUnit");
+//        EntityManager em = emf.createEntityManager();
+//        
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Midia> cq = cb.createQuery(Midia.class);
+//        Root<Midia> root = cq.from(Midia.class);
+//        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        
+//        
+        Midia midia = new Midia();
+        midia.setNome("huhuhuTeste");
+       
+        Session session = sessionFactory.openSession();
+        Transaction tx1 = session.beginTransaction();
+        
+//        session.save(midia);
+        session.persist(midia);
+        tx1.commit();
+        session.flush();
+        
         System.out.println("que nojo");
     }
 }

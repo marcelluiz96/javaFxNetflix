@@ -10,8 +10,6 @@
         <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/netflix</property>
 
-
-
         <property name="connection_pool_size">1</property>
 
         <property name="hbm2ddl.auto">create</property>
@@ -20,7 +18,7 @@
 
 
 
-       <mapping class="org.javabrains.sanjaya.dto.UserDetails"/>
+       <mapping class="entity.Midia"/>
 
     </session-factory>
 </hibernate-configuration>
