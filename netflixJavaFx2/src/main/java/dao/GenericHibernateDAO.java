@@ -1,25 +1,37 @@
 package dao;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 
 import connector.HibernateUtil;
+import entity.Midia;
 
 /**
  * 
  * @author marce
  * Classe com algumas funções do Hibernate para os DAOs seguintes
+ * MEU AMIGO ESSE CÓDIGO TÁ FICANDO LINDO DRUDRUDRSURSDHU
  *
  */
 public class GenericHibernateDAO extends HibernateTransactionWrapper{
 
+	@Resource(name = "sessionFactory")
 	SessionFactory sessionFactory;
-
+	
 	public GenericHibernateDAO() {
 		sessionFactory = HibernateUtil.getSessionFactory();
 	}
 
+	//PERSISTE QUALQUER OBJETO ENVIADO. TODO TRATAR EXCEÇÕES
 	public boolean persist(final Object object) {
 		HibernateTransactionWrapper wrapper = new HibernateTransactionWrapper();
 		try {
@@ -36,6 +48,22 @@ public class GenericHibernateDAO extends HibernateTransactionWrapper{
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public <T> List<T> listAll(Class<T> classe) {
+		return listAll(classe, false);
+	}
+	
+	public <T> List<T> listAll(Class<T> classe, boolean cache) {
+		getCurrentSession().beginTransaction();
+		CriteriaQuery<T> query = getCurrentSession().getCriteriaBuilder().createQuery(classe);
+		query.select(query.from(classe));
+		Query<T> q = getCurrentSession().createQuery(query);
+		q.setCacheable(cache);
+		List<T> retorno = q.list();
+		
+		getCurrentSession().close();
+		return retorno;
 	}
 
 

@@ -39,14 +39,12 @@ public class App
         
         
         Midia midia = new Midia();
-        midia.setNome("CHUPA ESSE GENERIC DAO MULEQUE");
-//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        session.persist(midia);
+        midia.setNome("Amo a momo");
         
         MidiaHibernateDAO miDao = new MidiaHibernateDAO();
         miDao.persist(midia);
         
+        midia = miDao.listAll(Midia.class, false).get(0);
         
         
 //        Transaction tx1 = session.beginTransaction();
@@ -57,5 +55,6 @@ public class App
 //        session.flush();
         
         System.out.println("que nojo");
+        System.exit(0);
     }
 }
