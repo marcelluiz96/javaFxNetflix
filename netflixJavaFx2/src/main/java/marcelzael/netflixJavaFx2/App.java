@@ -44,7 +44,7 @@ public class App
         MidiaHibernateDAO miDao = new MidiaHibernateDAO();
         miDao.persist(midia);
         
-        midia = miDao.listAll(Midia.class, false).get(0);
+        midia = miDao.listAll(Midia.class).get(0);
         
         
 //        Transaction tx1 = session.beginTransaction();

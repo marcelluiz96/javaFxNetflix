@@ -6,11 +6,12 @@ import org.hibernate.Transaction;
 import connector.HibernateUtil;
 
 public class HibernateTransactionWrapper {
-	public boolean run(TransactionalCode transactionalCode) {
+	public <T> boolean run(TransactionalCode transactionalCode) {
 
 		boolean status = false;
 		Session session = null;
 		Transaction transaction = null;
+		T auxVar;
 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -31,5 +32,9 @@ public class HibernateTransactionWrapper {
 			session.close();
 		}
 		return status;
+		
+		
 	}
+	
+	
 }
