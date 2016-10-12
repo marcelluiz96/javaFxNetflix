@@ -1,9 +1,9 @@
-package dao;
+package marcelzael.netflixJavaFx2.DAO;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import connector.HibernateUtil;
+import marcelzael.netflixJavaFx2.connector.HibernateUtil;
 
 public class HibernateTransactionWrapper {
 	public <T> boolean run(TransactionalCode transactionalCode) {

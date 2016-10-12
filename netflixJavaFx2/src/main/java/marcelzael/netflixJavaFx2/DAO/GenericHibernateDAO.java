@@ -1,4 +1,4 @@
-package dao;
+package marcelzael.netflixJavaFx2.DAO;
 
 import java.util.List;
 
@@ -12,9 +12,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
-
-import connector.HibernateUtil;
-import entity.Midia;
+import marcelzael.netflixJavaFx2.connector.HibernateUtil;
+import marcelzael.netflixJavaFx2.entity.Midia;
 
 /**
  * 

@@ -1,10 +1,13 @@
-package connector;
+package marcelzael.netflixJavaFx2.connector;
+
+import javax.annotation.Resource;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
+	@Resource
     private static final SessionFactory sessionFactory;
 
     static {

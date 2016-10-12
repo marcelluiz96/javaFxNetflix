@@ -11,9 +11,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import connector.HibernateUtil;
-import dao.MidiaHibernateDAO;
-import entity.Midia;
+import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
+import marcelzael.netflixJavaFx2.connector.HibernateUtil;
+import marcelzael.netflixJavaFx2.entity.Midia;
 
 /**
  * Hello world!

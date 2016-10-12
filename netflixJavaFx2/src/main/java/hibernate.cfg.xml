@@ -20,7 +20,7 @@
 
         <property name="show_sql">true</property>
 
-       <mapping class="entity.Midia"/>
+       <mapping class="marcelzael.netflixJavaFx2.entity.Midia"/>
 
     </session-factory>
 </hibernate-configuration>
