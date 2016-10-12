@@ -21,6 +21,7 @@
         <property name="show_sql">true</property>
 
        <mapping class="marcelzael.netflixJavaFx2.entity.Midia"/>
+       <mapping class="marcelzael.netflixJavaFx2.entity.Usuario"/>
 
     </session-factory>
 </hibernate-configuration>
