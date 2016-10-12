@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 
@@ -48,6 +49,22 @@ public class GenericHibernateDAO extends HibernateTransactionWrapper{
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public <T> T getById(Class<T> classe, long id) {
+		getCurrentSession().beginTransaction();
+		Criteria c = getCurrentSession().createCriteria(classe);
+		
+		c.add(Restrictions.idEq(id));
+		
+		List<T> retorno = c.list();
+		
+		if (retorno == null || retorno.isEmpty()) {
+			return null;
+		} else {
+			return classe.cast(retorno.get(0));	
+		}
+		
 	}
 	
 	public <T> List<T> listAll(Class<T> classe) {
