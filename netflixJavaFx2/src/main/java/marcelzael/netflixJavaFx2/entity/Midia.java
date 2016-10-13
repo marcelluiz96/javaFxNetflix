@@ -3,6 +3,8 @@ package marcelzael.netflixJavaFx2.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,8 +28,28 @@ public class Midia implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="midia_seq")
 	@SequenceGenerator(name="midia_seq", sequenceName="midia_seq", allocationSize=1)
 	private long id;
-	
+
 	private String nome;
+
+	private String descricao;
+
+	private int ano;
+
+	@Enumerated(EnumType.STRING)
+	private TipoFilme tipoFilme;
+
+	private int temporada;
+	private int episodio;
+
+	private String duracao;
+
+	private String categoria;
+
+	private String diretor;
+
+	private String atorPrincipal;
+
+	private int faixaEtaria;
 
 	public long getId() {
 		return id;

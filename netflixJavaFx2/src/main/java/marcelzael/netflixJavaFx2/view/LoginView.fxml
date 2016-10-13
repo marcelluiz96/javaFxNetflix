@@ -9,39 +9,38 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="490.0" prefWidth="854.0" style="-fx-background-image: url(&quot;http://wallpapersiq.com/wp-content/uploads/img/interstellar-black-hole-1280x1024.jpg&quot;); -fx-background-size: cover;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60">
+<AnchorPane prefHeight="900.0" prefWidth="1440.0" style="-fx-background-image: url(&quot;http://wallpapersiq.com/wp-content/uploads/img/interstellar-black-hole-1280x1024.jpg&quot;); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.LoginController">
    <children>
-      <AnchorPane layoutX="285.0" layoutY="39.0" prefHeight="393.0" prefWidth="285.0" style="-fx-background-color: #FFF; -fx-border-radius: 10 10 0 0; -fx-background-radius: 5 5 5 5;">
+      <AnchorPane layoutX="578.0" layoutY="254.0" prefHeight="393.0" prefWidth="285.0" style="-fx-background-color: #FFF; -fx-border-radius: 10 10 0 0; -fx-background-radius: 5 5 5 5;">
          <effect>
             <DropShadow height="50.65" radius="47.805" width="142.57" />
          </effect>
          <children>
-            <TextField layoutX="77.0" layoutY="114.0" style="-fx-alignment: center;" />
-            <Button layoutX="112.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: #66BB6A;" text="Login" textFill="WHITE">
+            <TextField fx:id="txLogin" layoutX="77.0" layoutY="114.0" style="-fx-alignment: center;" />
+            <Button fx:id="btLogin" layoutX="112.0" layoutY="224.0" mnemonicParsing="false" onAction="#actionLogin" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: #66BB6A;" text="Login" textFill="WHITE">
                <effect>
                   <DropShadow />
                </effect>
             </Button>
             <Label layoutX="39.0" layoutY="161.0" text="Senha:" />
             <Label layoutX="41.0" layoutY="118.0" text="Login:" />
-            <Button layoutX="113.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: #E53935;" text="Limpar" textFill="WHITE">
+            <Button fx:id="btLimpar" layoutX="113.0" layoutY="266.0" mnemonicParsing="false" onAction="#actionLimpar" prefHeight="25.0" prefWidth="63.0" style="-fx-background-color: #E53935;" text="Limpar" textFill="WHITE">
                <effect>
                   <DropShadow />
                </effect>
             </Button>
-            <Button layoutX="75.0" layoutY="314.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" style="-fx-background-color: #0288d1;" text="Esqueci minha senha" textFill="WHITE">
+            <Button fx:id="btEsqueciSenha" layoutX="75.0" layoutY="314.0" mnemonicParsing="false" onAction="#actionEsqueciSenha" prefHeight="25.0" prefWidth="139.0" style="-fx-background-color: #0288d1;" text="Esqueci minha senha" textFill="WHITE">
                <effect>
                   <DropShadow />
                </effect>
             </Button>
             <Label layoutX="52.0" layoutY="362.0" text="V0.0.1 - Nenhum Direito reservado" />
-            <ImageView fitHeight="63.0" fitWidth="239.0" layoutX="58.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivLogo" fitHeight="63.0" fitWidth="519.0" layoutX="58.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/NetflixLogo.png" />
                </image>
             </ImageView>
-            <PasswordField layoutX="77.0" layoutY="157.0" style="-fx-alignment: center;" />
+            <PasswordField fx:id="txSenha" layoutX="77.0" layoutY="157.0" style="-fx-alignment: center;" />
          </children>
       </AnchorPane>
    </children>
