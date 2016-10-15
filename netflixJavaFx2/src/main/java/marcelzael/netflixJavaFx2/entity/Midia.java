@@ -2,6 +2,7 @@ package marcelzael.netflixJavaFx2.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,6 +28,7 @@ public class Midia implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="midia_seq")
 	@SequenceGenerator(name="midia_seq", sequenceName="midia_seq", allocationSize=1)
+	@Column(name = "midia_id", unique = true, nullable = false)
 	private long id;
 
 	private String nome;
@@ -49,7 +51,8 @@ public class Midia implements Serializable {
 
 	private String atorPrincipal;
 
-	private int faixaEtaria;
+	@Enumerated(EnumType.STRING)
+	private TipoFaixaEtaria faixaEtaria;
 
 	public long getId() {
 		return id;

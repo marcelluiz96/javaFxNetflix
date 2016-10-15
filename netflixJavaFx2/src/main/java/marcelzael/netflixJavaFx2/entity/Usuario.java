@@ -3,6 +3,7 @@ package marcelzael.netflixJavaFx2.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,17 +26,33 @@ public class Usuario implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="usuario_seq")
 	@SequenceGenerator(name="usuario_seq", sequenceName="usuario_seq", allocationSize=1)
+	@Column(name = "usuario_id", unique = true, nullable = false)
 	private long id;
 	
+	@Column(nullable = false, unique = true)
 	private String login;
 	
 	private String senha;
 	
-	private int idade;
+	private boolean admin;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoFaixaEtaria idade;
 	
 	@OneToMany
 	private List<Midia> favoritos;
 	
+	public Usuario() {
+		super();
+	}
+
+	public Usuario(String login, String senha, boolean admin, TipoFaixaEtaria idade) {
+		super();
+		this.login = login;
+		this.senha = senha;
+		this.admin = admin;
+		this.idade = idade;
+	}
 
 	public long getId() {
 		return id;
@@ -61,17 +78,35 @@ public class Usuario implements Serializable{
 		this.senha = senha;
 	}
 
-	public int getIdade() {
+	public TipoFaixaEtaria getIdade() {
 		return idade;
 	}
 
-	public void setIdade(int idade) {
+	public void setIdade(TipoFaixaEtaria idade) {
 		this.idade = idade;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	public List<Midia> getFavoritos() {
+		return favoritos;
+	}
+
+	public void setFavoritos(List<Midia> favoritos) {
+		this.favoritos = favoritos;
+	}
+	
+	
 	
 	
 

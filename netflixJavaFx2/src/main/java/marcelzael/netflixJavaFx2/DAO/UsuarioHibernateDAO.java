@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.query.Query;
 
+import marcelzael.netflixJavaFx2.entity.TipoFaixaEtaria;
 import marcelzael.netflixJavaFx2.entity.Usuario;
 
 public class UsuarioHibernateDAO extends GenericHibernateDAO {
@@ -39,6 +40,14 @@ public class UsuarioHibernateDAO extends GenericHibernateDAO {
 		if (retorno != null && !(retorno.isEmpty()))
 			return retorno.get(0);
 		else return null;
+	}
+
+	public void cadastrarUsuario(String nome, String senha, TipoFaixaEtaria faixaEtaria, boolean admin) throws Exception {
+		Usuario usuario = new Usuario(nome, senha, admin, faixaEtaria);
+		boolean sucesso = persist(usuario);
+		
+		if (!sucesso) throw new Exception("Falha ao realizar o cadastro!");
+		
 	}
 
 }
