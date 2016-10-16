@@ -56,8 +56,7 @@ public class LoginController implements Initializable {
 				Stage stage = (Stage) btLogin.getScene().getWindow();
 			    stage.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 			
 			
