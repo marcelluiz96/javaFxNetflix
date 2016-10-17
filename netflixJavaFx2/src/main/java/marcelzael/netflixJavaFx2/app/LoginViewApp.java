@@ -1,4 +1,4 @@
-package marcelzael.netflixJavaFx2.controller;
+package marcelzael.netflixJavaFx2.app;
 
 import java.io.IOException;
 

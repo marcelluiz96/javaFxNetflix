@@ -5,8 +5,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
-import marcelzael.netflixJavaFx2.controller.AdminViewApp;
-import marcelzael.netflixJavaFx2.controller.CatalogueViewApp;
+import marcelzael.netflixJavaFx2.app.AdminViewApp;
+import marcelzael.netflixJavaFx2.app.CatalogueViewApp;
 
 public class CatalogueController {
 	

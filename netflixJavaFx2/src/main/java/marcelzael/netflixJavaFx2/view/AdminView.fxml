@@ -191,17 +191,18 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="378.0">
                                  <children>
-                                    <TableView layoutX="47.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tvFilmes" layoutX="47.0" layoutY="47.0" onMouseClicked="#selecionarFilmeTabela" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn fx:id="columnNome" prefWidth="75.0" text="Nome" />
-                                        <TableColumn fx:id="columnAno" prefWidth="75.0" text="Ano" />
-                                          <TableColumn fx:id="columnDuracao" prefWidth="75.0" text="Duração" />
-                                          <TableColumn fx:id="columnCategoria" prefWidth="75.0" text="Categoria" />
-                                          <TableColumn fx:id="columnTipo" prefWidth="75.0" text="Tipo" />
-                                          <TableColumn fx:id="columnTempEpi" prefWidth="75.0" text="Temp. Epi." />
-                                          <TableColumn fx:id="columnDiretor" prefWidth="75.0" text="Diretor" />
-                                          <TableColumn fx:id="columnAtorPrincipal" prefWidth="75.0" text="Ator Principal" />
-                                          <TableColumn fx:id="columnFaixaEtaria" prefWidth="75.0" text="Faixa Etária" />
+                                          <TableColumn fx:id="columnIdFilme" prefWidth="75.0" text="Id" />
+                                        <TableColumn fx:id="columnNomeFilme" prefWidth="75.0" text="Nome" />
+                                        <TableColumn fx:id="columnAnoFilme" prefWidth="75.0" text="Ano" />
+                                          <TableColumn fx:id="columnDuracaoFilme" prefWidth="75.0" text="Duração" />
+                                          <TableColumn fx:id="columnCategoriaFilme" prefWidth="75.0" text="Categoria" />
+                                          <TableColumn fx:id="columnTipoFilme" prefWidth="75.0" text="Tipo" />
+                                          <TableColumn fx:id="columnTempEpiFilme" prefWidth="75.0" text="Temp. Epi." />
+                                          <TableColumn fx:id="columnDiretorFilme" prefWidth="75.0" text="Diretor" />
+                                          <TableColumn fx:id="columnAtorPrincipalFilme" prefWidth="75.0" text="Ator Principal" />
+                                          <TableColumn fx:id="columnFaixaEtariaFilme" prefWidth="75.0" text="Faixa Etária" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -380,7 +381,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btCriarFilme" layoutX="1187.0" layoutY="776.0" mnemonicParsing="false" onAction="#cadastrarUsuario" prefHeight="71.0" prefWidth="238.0" style="-fx-background-color: #66BB6A;" text="Criar Filme" textFill="WHITE">
+                        <Button fx:id="btCriarFilme" layoutX="1187.0" layoutY="776.0" mnemonicParsing="false" onAction="#cadastrarFilme" prefHeight="71.0" prefWidth="238.0" style="-fx-background-color: #66BB6A;" text="Criar Filme" textFill="WHITE">
                            <effect>
                               <DropShadow />
                            </effect>

@@ -13,8 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
-import marcelzael.netflixJavaFx2.controller.CatalogueViewApp;
-import marcelzael.netflixJavaFx2.controller.LoginViewApp;
+import marcelzael.netflixJavaFx2.app.CatalogueViewApp;
+import marcelzael.netflixJavaFx2.app.LoginViewApp;
 import marcelzael.netflixJavaFx2.entity.Usuario;
 
 public class LoginController implements Initializable {

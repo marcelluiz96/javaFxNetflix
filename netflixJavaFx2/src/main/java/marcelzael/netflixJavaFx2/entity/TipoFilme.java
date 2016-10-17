@@ -22,6 +22,17 @@ public enum TipoFilme {
 	public String toString() {
 		return descricao;
 	}
+	
+	public static TipoFilme fromString(String text) {
+	    if (text != null) {
+	      for (TipoFilme b : TipoFilme.values()) {
+	        if (text.equalsIgnoreCase(b.descricao)) {
+	          return b;
+	        }
+	      }
+	    }
+	    throw new IllegalArgumentException("No constant with text " + text + " found");
+	  }
 
 
 }

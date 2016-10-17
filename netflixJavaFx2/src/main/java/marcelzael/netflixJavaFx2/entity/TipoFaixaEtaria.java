@@ -24,4 +24,15 @@ public enum TipoFaixaEtaria {
 	public String toString() {
 		return descricao;
 	}
+	
+	public static TipoFaixaEtaria fromString(String text) {
+	    if (text != null) {
+	      for (TipoFaixaEtaria b : TipoFaixaEtaria.values()) {
+	        if (text.equalsIgnoreCase(b.descricao)) {
+	          return b;
+	        }
+	      }
+	    }
+	    throw new IllegalArgumentException("No constant with text " + text + " found");
+	  }
 }

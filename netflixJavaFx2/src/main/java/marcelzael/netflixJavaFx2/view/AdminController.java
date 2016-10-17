@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,16 +20,20 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
-import marcelzael.netflixJavaFx2.controller.AdminViewApp;
-import marcelzael.netflixJavaFx2.controller.LoginViewApp;
+import marcelzael.netflixJavaFx2.app.AdminViewApp;
+import marcelzael.netflixJavaFx2.app.LoginViewApp;
+import marcelzael.netflixJavaFx2.dataModel.MidiaDataModel;
 import marcelzael.netflixJavaFx2.entity.Midia;
 import marcelzael.netflixJavaFx2.entity.TipoFaixaEtaria;
 import marcelzael.netflixJavaFx2.entity.TipoFilme;
@@ -63,6 +69,18 @@ public class AdminController {
 	@FXML Button btSalvar;
 	@FXML Button btDeletar;
 	@FXML Button btAlterarCapa;
+	
+	@FXML private TableView<MidiaDataModel> tvFilmes;
+	@FXML private TableColumn<MidiaDataModel, Long> columnIdFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnNomeFilme;
+	@FXML private TableColumn<MidiaDataModel, Integer> columnAnoFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnDuracaoFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnCategoriaFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnTipoFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnTempEpiFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnAtorPrincipalFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnDiretorFilme;
+	@FXML private TableColumn<MidiaDataModel, String> columnFaixaEtariaFilme;
 
 	//Aba 2: Cadastro de Filmes
 	@FXML private TextField txNomeCadastro;
@@ -97,6 +115,28 @@ public class AdminController {
 		cbTipoFilmeCadastro.getItems().setAll(TipoFilme.values());
 		
 		filmeACadastrar = new Midia();
+		
+		carregarTabelaFilmes();
+	}
+	
+	public void carregarTabelaFilmes() {
+		
+		// OBRIGADO CODE.MAKERY OBRIGADO LAMBDAS OBRIGADO JESUS
+		
+		columnIdFilme.setCellValueFactory(cellData -> cellData.getValue().getIdColumnProperty().asObject());
+		columnAnoFilme.setCellValueFactory(cellData -> cellData.getValue().getAnoColumnProperty().asObject());
+		
+		
+		columnNomeFilme.setCellValueFactory(cellData -> cellData.getValue().getNomeColumnProperty());
+		columnDuracaoFilme.setCellValueFactory(cellData -> cellData.getValue().getDuracaoColumnProperty());
+		columnCategoriaFilme.setCellValueFactory(cellData -> cellData.getValue().getCategoriaColumnProperty());
+		columnTipoFilme.setCellValueFactory(cellData -> cellData.getValue().getTipoFilmeColumnProperty());
+		columnTempEpiFilme.setCellValueFactory(cellData -> cellData.getValue().getTempEpisodioColumnProperty());
+		columnAtorPrincipalFilme.setCellValueFactory(cellData -> cellData.getValue().getAtorPrincipalColumnProperty());
+		columnDiretorFilme.setCellValueFactory(cellData -> cellData.getValue().getDiretorColumnProperty());
+		columnFaixaEtariaFilme.setCellValueFactory(cellData -> cellData.getValue().getFaixaEtariaColumnProperty());
+		columnNomeFilme.setCellValueFactory(cellData -> cellData.getValue().getNomeColumnProperty());	
+		
 	}
 
 	@FXML
@@ -130,6 +170,7 @@ public class AdminController {
 			midiaHibernateDAO.persist(filmeACadastrar);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR, "Erro ao cadastrar Filme! Verifique se todos os campos foram preenchidos corretamente"
 					+ "ou tente utilizar outro nome de usuário", ButtonType.OK);
 			alert.show();
@@ -169,16 +210,44 @@ public class AdminController {
 			e1.printStackTrace();
 		}
 	}
+	
+	@FXML
+	public void selecionarFilmeTabela(MouseEvent event) {
+		filmeSelecionado = tvFilmes.getSelectionModel().getSelectedItem().asMidiaObject();
+		txNomeFilme.setText(filmeSelecionado.getNome());
+		taDescricao.setText(filmeSelecionado.getDescricao());
+		txAno.setText(String.valueOf(filmeSelecionado.getAno()));
+		
+		//A PREGUIÇA DE TER QUE FAZER ISSO DE PASSAR TODO VALOR DO OBJETO CLICADO PARA VÁRIOS TEXTFIELDS 
+		// E ENTÃO PASSAR TUDO O QUE O CARA DIGITOU DE VOLTA PRA O OBJETO A PERSISTIR NO BANCO
+		// VAI ME FAZER QUERER APRENDAR A DAR UM BIND ENTRE ESSE OBJETO E OS CAMPOS.
+		// TODO APRENDER PRA A SPRINT 2
+	}
+	
+	@FXML
+	public void deletarFilme(ActionEvent event) {
+		
+	}
+	
+	@FXML
+	public void salvarAlteracoesFilme(ActionEvent event) {
+		
+	}
+	
 
+	//MÉTODO IMPORTANTE DEVIDO AO QUE OCORRE APÓS O SET. É AQUI QUE SÃO CONECTADOS OS DADOS DO APP À VIEW
+	public void setAdminViewApp(AdminViewApp adminViewApp) {
+		this.adminViewApp = adminViewApp;
+		
+		tvFilmes.setItems(adminViewApp.getListaMidias());
+	}
 
 
 	public AdminViewApp getAdminViewApp() {
 		return adminViewApp;
 	}
 
-	public void setAdminViewApp(AdminViewApp adminViewApp) {
-		this.adminViewApp = adminViewApp;
-	}
+	
 
 	public TextField getTxLoginUsuario() {
 		return txLoginUsuario;
