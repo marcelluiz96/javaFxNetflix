@@ -29,6 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.converter.NumberStringConverter;
 import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
 import marcelzael.netflixJavaFx2.app.AdminViewApp;
@@ -113,10 +114,12 @@ public class AdminController {
 		cbTipoFaixaEtariaUsuario.getItems().setAll(TipoFaixaEtaria.values());
 		cbTipoFaixaEtariaCadastro.getItems().setAll(TipoFaixaEtaria.values());
 		cbTipoFilmeCadastro.getItems().setAll(TipoFilme.values());
+		cbTipoFilme.getItems().setAll(TipoFilme.values());
 		
 		filmeACadastrar = new Midia();
 		
 		carregarTabelaFilmes();
+		
 	}
 	
 	public void carregarTabelaFilmes() {
@@ -135,9 +138,27 @@ public class AdminController {
 		columnAtorPrincipalFilme.setCellValueFactory(cellData -> cellData.getValue().getAtorPrincipalColumnProperty());
 		columnDiretorFilme.setCellValueFactory(cellData -> cellData.getValue().getDiretorColumnProperty());
 		columnFaixaEtariaFilme.setCellValueFactory(cellData -> cellData.getValue().getFaixaEtariaColumnProperty());
-		columnNomeFilme.setCellValueFactory(cellData -> cellData.getValue().getNomeColumnProperty());	
+		columnNomeFilme.setCellValueFactory(cellData -> cellData.getValue().getNomeColumnProperty());
+		
+		//Realizando bind com TextFields
+		tvFilmes.getSelectionModel().selectedItemProperty().addListener((observableValue, midiaDataModel, midiaDataModel2) -> {
+			txNomeFilme.textProperty().bindBidirectional(midiaDataModel2.getNomeColumnProperty());
+			taDescricao.textProperty().bindBidirectional(midiaDataModel2.getDescricaoColumnProperty());
+			txAno.textProperty().bindBidirectional(midiaDataModel2.getAnoColumnProperty(), new NumberStringConverter());
+			txDuracao.textProperty().bindBidirectional(midiaDataModel2.getDuracaoColumnProperty());
+			txCategoria.textProperty().bindBidirectional(midiaDataModel2.getCategoriaColumnProperty());
+			txTempEpisodio.textProperty().bindBidirectional(midiaDataModel2.getTempEpisodioColumnProperty());
+			txDiretor.textProperty().bindBidirectional(midiaDataModel2.getDiretorColumnProperty());
+			txAtorPrincipal.textProperty().bindBidirectional(midiaDataModel2.getAtorPrincipalColumnProperty());
+			
+			//CHOICEBOX ENUM: A complexidade do código aumenta
+			//***StackOverflow Intensifies***
+			//Não deu. Acho que por hoje é só pessoal.
+//			cbTipoFilme.valueProperty().bind(midiaDataModel2.getTipoFilmeColumnProperty());
+		});
 		
 	}
+	
 
 	@FXML
 	public void cadastrarUsuario(ActionEvent event) {
@@ -214,9 +235,9 @@ public class AdminController {
 	@FXML
 	public void selecionarFilmeTabela(MouseEvent event) {
 		filmeSelecionado = tvFilmes.getSelectionModel().getSelectedItem().asMidiaObject();
-		txNomeFilme.setText(filmeSelecionado.getNome());
-		taDescricao.setText(filmeSelecionado.getDescricao());
-		txAno.setText(String.valueOf(filmeSelecionado.getAno()));
+//		txNomeFilme.setText(filmeSelecionado.getNome());
+//		taDescricao.setText(filmeSelecionado.getDescricao());
+//		txAno.setText(String.valueOf(filmeSelecionado.getAno()));
 		
 		//A PREGUIÇA DE TER QUE FAZER ISSO DE PASSAR TODO VALOR DO OBJETO CLICADO PARA VÁRIOS TEXTFIELDS 
 		// E ENTÃO PASSAR TUDO O QUE O CARA DIGITOU DE VOLTA PRA O OBJETO A PERSISTIR NO BANCO
