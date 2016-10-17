@@ -70,7 +70,7 @@ public class AdminController {
 	@FXML Button btSalvar;
 	@FXML Button btDeletar;
 	@FXML Button btAlterarCapa;
-	
+
 	@FXML private TableView<MidiaDataModel> tvFilmes;
 	@FXML private TableColumn<MidiaDataModel, Long> columnIdFilme;
 	@FXML private TableColumn<MidiaDataModel, String> columnNomeFilme;
@@ -98,7 +98,7 @@ public class AdminController {
 	@FXML Button btEscolherCapa;
 	@FXML Button btEscolherArquivo;
 	@FXML Button btCriarFilme;
-	
+
 	@FXML ImageView ivCapaFilmeCadastro;
 
 	//Aba 3: Cadastro de usuários
@@ -115,21 +115,21 @@ public class AdminController {
 		cbTipoFaixaEtariaCadastro.getItems().setAll(TipoFaixaEtaria.values());
 		cbTipoFilmeCadastro.getItems().setAll(TipoFilme.values());
 		cbTipoFilme.getItems().setAll(TipoFilme.values());
-		
+
 		filmeACadastrar = new Midia();
-		
+
 		carregarTabelaFilmes();
-		
+
 	}
-	
+
 	public void carregarTabelaFilmes() {
-		
+
 		// OBRIGADO CODE.MAKERY OBRIGADO LAMBDAS OBRIGADO JESUS
-		
+
 		columnIdFilme.setCellValueFactory(cellData -> cellData.getValue().getIdColumnProperty().asObject());
 		columnAnoFilme.setCellValueFactory(cellData -> cellData.getValue().getAnoColumnProperty().asObject());
-		
-		
+
+
 		columnNomeFilme.setCellValueFactory(cellData -> cellData.getValue().getNomeColumnProperty());
 		columnDuracaoFilme.setCellValueFactory(cellData -> cellData.getValue().getDuracaoColumnProperty());
 		columnCategoriaFilme.setCellValueFactory(cellData -> cellData.getValue().getCategoriaColumnProperty());
@@ -139,7 +139,7 @@ public class AdminController {
 		columnDiretorFilme.setCellValueFactory(cellData -> cellData.getValue().getDiretorColumnProperty());
 		columnFaixaEtariaFilme.setCellValueFactory(cellData -> cellData.getValue().getFaixaEtariaColumnProperty());
 		columnNomeFilme.setCellValueFactory(cellData -> cellData.getValue().getNomeColumnProperty());
-		
+
 		//Realizando bind com TextFields
 		tvFilmes.getSelectionModel().selectedItemProperty().addListener((observableValue, midiaDataModel, midiaDataModel2) -> {
 			txNomeFilme.textProperty().bindBidirectional(midiaDataModel2.getNomeColumnProperty());
@@ -150,15 +150,15 @@ public class AdminController {
 			txTempEpisodio.textProperty().bindBidirectional(midiaDataModel2.getTempEpisodioColumnProperty());
 			txDiretor.textProperty().bindBidirectional(midiaDataModel2.getDiretorColumnProperty());
 			txAtorPrincipal.textProperty().bindBidirectional(midiaDataModel2.getAtorPrincipalColumnProperty());
-			
+
 			//CHOICEBOX ENUM: A complexidade do código aumenta
 			//***StackOverflow Intensifies***
 			//Não deu. Acho que por hoje é só pessoal.
-//			cbTipoFilme.valueProperty().bind(midiaDataModel2.getTipoFilmeColumnProperty());
+			//			cbTipoFilme.valueProperty().bind(midiaDataModel2.getTipoFilmeColumnProperty());
 		});
-		
+
 	}
-	
+
 
 	@FXML
 	public void cadastrarUsuario(ActionEvent event) {
@@ -174,7 +174,7 @@ public class AdminController {
 			alert.show();
 		}
 	}
-	
+
 	@FXML
 	public void cadastrarFilme(ActionEvent event) {
 		try {
@@ -187,9 +187,9 @@ public class AdminController {
 			filmeACadastrar.setAtorPrincipal(txAtorPrincipalCadastro.getText());
 			filmeACadastrar.setFaixaEtaria(cbTipoFaixaEtariaCadastro.getValue());
 			filmeACadastrar.setTipoFilme(cbTipoFilmeCadastro.getValue());
-			
+
 			midiaHibernateDAO.persist(filmeACadastrar);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR, "Erro ao cadastrar Filme! Verifique se todos os campos foram preenchidos corretamente"
@@ -231,35 +231,42 @@ public class AdminController {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void selecionarFilmeTabela(MouseEvent event) {
 		filmeSelecionado = tvFilmes.getSelectionModel().getSelectedItem().asMidiaObject();
-//		txNomeFilme.setText(filmeSelecionado.getNome());
-//		taDescricao.setText(filmeSelecionado.getDescricao());
-//		txAno.setText(String.valueOf(filmeSelecionado.getAno()));
-		
+		//		txNomeFilme.setText(filmeSelecionado.getNome());
+		//		taDescricao.setText(filmeSelecionado.getDescricao());
+		//		txAno.setText(String.valueOf(filmeSelecionado.getAno()));
+
 		//A PREGUIÇA DE TER QUE FAZER ISSO DE PASSAR TODO VALOR DO OBJETO CLICADO PARA VÁRIOS TEXTFIELDS 
 		// E ENTÃO PASSAR TUDO O QUE O CARA DIGITOU DE VOLTA PRA O OBJETO A PERSISTIR NO BANCO
 		// VAI ME FAZER QUERER APRENDAR A DAR UM BIND ENTRE ESSE OBJETO E OS CAMPOS.
 		// TODO APRENDER PRA A SPRINT 2
 	}
-	
+
 	@FXML
 	public void deletarFilme(ActionEvent event) {
-		
+		if (filmeSelecionado.getId() != 0) {
+			midiaHibernateDAO.delete(filmeSelecionado);
+		}
 	}
-	
+
 	@FXML
 	public void salvarAlteracoesFilme(ActionEvent event) {
-		
+		if (filmeSelecionado.getId() != 0) {
+			filmeSelecionado.setNome(txNomeFilme.getText());
+			filmeSelecionado.setTipoFilme(cbTipoFilme.getValue());
+			filmeSelecionado.setFaixaEtaria(cbTipoFaixaEtaria.getValue());
+			midiaHibernateDAO.update(filmeSelecionado);
+		}
 	}
-	
+
 
 	//MÉTODO IMPORTANTE DEVIDO AO QUE OCORRE APÓS O SET. É AQUI QUE SÃO CONECTADOS OS DADOS DO APP À VIEW
 	public void setAdminViewApp(AdminViewApp adminViewApp) {
 		this.adminViewApp = adminViewApp;
-		
+
 		tvFilmes.setItems(adminViewApp.getListaMidias());
 	}
 
@@ -268,7 +275,7 @@ public class AdminController {
 		return adminViewApp;
 	}
 
-	
+
 
 	public TextField getTxLoginUsuario() {
 		return txLoginUsuario;

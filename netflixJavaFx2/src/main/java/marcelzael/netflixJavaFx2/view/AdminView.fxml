@@ -38,7 +38,7 @@
                                  <children>
                                     <HBox layoutX="55.0" layoutY="778.0">
                                        <children>
-                                          <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #66BB6A;" text="Salvar Alterações" textFill="WHITE">
+                                          <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#salvarAlteracoesFilme" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #66BB6A;" text="Salvar Alterações" textFill="WHITE">
                                              <effect>
                                                 <DropShadow />
                                              </effect>
@@ -49,7 +49,7 @@
                                                 <Insets right="8.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="154.0" style="-fx-background-color: #E53935;" text="Deletar Filme" textFill="WHITE">
+                                          <Button fx:id="btDeletar" mnemonicParsing="false" onAction="#deletarFilme" prefHeight="44.0" prefWidth="154.0" style="-fx-background-color: #E53935;" text="Deletar Filme" textFill="WHITE">
                                              <effect>
                                                 <DropShadow />
                                              </effect>
@@ -179,7 +179,15 @@
                                           </ChoiceBox>
                                        </children>
                                     </GridPane>
-                                    <Button layoutX="134.0" layoutY="707.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Alterar capa..." textFill="WHITE">
+                                    <Button fx:id="btAlterarCapa" layoutX="217.0" layoutY="717.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Alterar Capa" textFill="WHITE">
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="55.0" layoutY="717.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Exibir Capa" textFill="WHITE">
                                        <effect>
                                           <DropShadow />
                                        </effect>

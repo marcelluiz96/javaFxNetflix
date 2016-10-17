@@ -20,13 +20,16 @@ import marcelzael.netflixJavaFx2.entity.Midia;
  * @author marce
  * Classe com algumas funções do Hibernate para os DAOs seguintes
  * MEU AMIGO ESSE CÓDIGO TÁ FICANDO LINDO DRUDRUDRSURSDHU
+ * 
+ * Update do dia 17: Descobri que existem classes assim prontas na Internet
+ * Quero morrer
  *
  */
 public class GenericHibernateDAO extends HibernateTransactionWrapper{
 
 	@Resource(name = "sessionFactory")
 	SessionFactory sessionFactory;
-	
+
 	public GenericHibernateDAO() {
 		sessionFactory = HibernateUtil.getSessionFactory();
 	}
@@ -36,11 +39,11 @@ public class GenericHibernateDAO extends HibernateTransactionWrapper{
 		HibernateTransactionWrapper wrapper = new HibernateTransactionWrapper();
 		try {
 			wrapper.run(new TransactionalCode() {
-				
+
 				@Override
 				public void execute(Session session, Transaction transaction) {
 					session.persist(object);
-					
+
 				}
 			});
 			return true;
@@ -49,27 +52,43 @@ public class GenericHibernateDAO extends HibernateTransactionWrapper{
 			return false;
 		}
 	}
-	
+
 	public <T> T getById(Class<T> classe, long id) {
 		getCurrentSession().beginTransaction();
 		Criteria c = getCurrentSession().createCriteria(classe);
-		
+
 		c.add(Restrictions.idEq(id));
-		
+
 		List<T> retorno = c.list();
-		
+
 		if (retorno == null || retorno.isEmpty()) {
 			return null;
 		} else {
 			return classe.cast(retorno.get(0));	
 		}
-		
+
+	}
+
+	public <T> void update(final T object){
+		Transaction t =  getCurrentSession().beginTransaction();
+		getCurrentSession().update(object);
+		t.commit();
+		getCurrentSession().close();
+
 	}
 	
+	public <T> void delete(final T object){
+		Transaction t =  getCurrentSession().beginTransaction();
+		getCurrentSession().delete(object);
+		t.commit();
+		getCurrentSession().close();
+
+	}
+
 	public <T> List<T> listAll(Class<T> classe) {
 		return listAll(classe, false);
 	}
-	
+
 	public <T> List<T> listAll(Class<T> classe, boolean cache) {
 		getCurrentSession().beginTransaction();
 		CriteriaQuery<T> query = getCurrentSession().getCriteriaBuilder().createQuery(classe);
@@ -77,7 +96,7 @@ public class GenericHibernateDAO extends HibernateTransactionWrapper{
 		Query<T> q = getCurrentSession().createQuery(query);
 		q.setCacheable(cache);
 		List<T> retorno = q.list();
-		
+
 		getCurrentSession().close();
 		return retorno;
 	}
