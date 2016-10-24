@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -20,19 +21,22 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="472.0">
                <children>
-                  <GridPane layoutX="2.0" layoutY="224.0" prefHeight="673.0" prefWidth="904.0" style="-fx-background-color: #CCC;">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                  </GridPane>
+                  <ScrollPane fx:id="scrollPane" layoutX="2.0" layoutY="224.0">
+                     <content>
+                        <GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="674.0" prefWidth="895.0" style="-fx-background-color: #CCC;">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
                   <Label layoutX="8.0" layoutY="-3.0" text="Lista de Filmes">
                      <font>
                         <Font size="36.0" />
@@ -40,15 +44,15 @@
                   </Label>
                   <Pane layoutX="26.0" layoutY="55.0" prefHeight="142.0" prefWidth="847.0">
                      <children>
-                        <CheckBox layoutY="19.0" mnemonicParsing="false" />
-                        <TextField layoutX="22.0" layoutY="15.0" prefHeight="25.0" prefWidth="174.0" promptText="Nome" />
-                        <TextField layoutX="22.0" layoutY="65.0" prefHeight="25.0" prefWidth="174.0" promptText="Categoria" />
-                        <CheckBox layoutY="70.0" mnemonicParsing="false" />
-                        <TextField layoutX="22.0" layoutY="115.0" prefHeight="25.0" prefWidth="174.0" promptText="Ator Principal" />
-                        <CheckBox layoutY="120.0" mnemonicParsing="false" />
-                        <TextField layoutX="254.0" layoutY="15.0" prefHeight="25.0" prefWidth="174.0" promptText="Diretor" />
-                        <CheckBox layoutX="231.0" layoutY="19.0" mnemonicParsing="false" />
-                        <ChoiceBox layoutX="254.0" layoutY="66.0" prefHeight="25.0" prefWidth="174.0" />
+                        <CheckBox fx:id="cNomeFilme" layoutY="19.0" mnemonicParsing="false" />
+                        <TextField fx:id="txNomeFilme" layoutX="22.0" layoutY="15.0" prefHeight="25.0" prefWidth="174.0" promptText="Nome" />
+                        <TextField fx:id="txCategoriaFilme" layoutX="22.0" layoutY="65.0" prefHeight="25.0" prefWidth="174.0" promptText="Categoria" />
+                        <CheckBox fx:id="cCategoriaFilme" layoutY="70.0" mnemonicParsing="false" />
+                        <TextField fx:id="txAtorPrincipalFilme" layoutX="22.0" layoutY="115.0" prefHeight="25.0" prefWidth="174.0" promptText="Ator Principal" />
+                        <CheckBox fx:id="cAtorPrincipalFilme" layoutY="120.0" mnemonicParsing="false" />
+                        <TextField fx:id="txDiretorFilme" layoutX="254.0" layoutY="15.0" prefHeight="25.0" prefWidth="174.0" promptText="Diretor" />
+                        <CheckBox fx:id="cDiretorFilme" layoutX="231.0" layoutY="19.0" mnemonicParsing="false" />
+                        <ChoiceBox fx:id="cbTipoFilme" layoutX="254.0" layoutY="66.0" prefHeight="25.0" prefWidth="174.0" />
                         <Label layoutX="22.0" layoutY="-4.0" text="Nome">
                            <font>
                               <Font size="15.0" />
@@ -74,12 +78,19 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ChoiceBox layoutX="254.0" layoutY="115.0" prefHeight="25.0" prefWidth="174.0" />
+                        <ChoiceBox fx:id="cbFaixaEtariaFilme" layoutX="254.0" layoutY="115.0" prefHeight="25.0" prefWidth="174.0" />
                         <Label layoutX="254.0" layoutY="96.0" text="Faixa Etária">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
+                        <CheckBox fx:id="cTipoFilme" layoutX="231.0" layoutY="69.0" mnemonicParsing="false" />
+                        <CheckBox fx:id="cFaixaEtariaFilme" layoutX="231.0" layoutY="119.0" mnemonicParsing="false" />
+                        <Button fx:id="btFiltrar" layoutX="636.0" layoutY="80.0" mnemonicParsing="false" onAction="#filtrar" prefHeight="54.0" prefWidth="197.0" style="-fx-background-color: #333;" text="Filtrar" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </Pane>
                   <Button fx:id="btPainelAdmin" layoutX="749.0" layoutY="14.0" mnemonicParsing="false" onAction="#acessarPainelAdmin" style="-fx-background-color: #3333;" text="Painel de Administrador" textFill="WHITE">
@@ -123,7 +134,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Game of Thrones" GridPane.columnIndex="1">
+                        <Label fx:id="lbNome" text="Game of Thrones" GridPane.columnIndex="1">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -133,7 +144,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Game of Thrones é um Seriado muito bem bolado da HBO" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="lbDescricao" text="Game of Thrones é um Seriado muito bem bolado da HBO" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -143,7 +154,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="2011" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="lbAno" text="2011" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -153,7 +164,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="1H40M" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="lbDuracao" text="1H40M" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -163,7 +174,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Morte" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label fx:id="lbCategoria" text="Morte" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -173,7 +184,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="George RR Martin (Mentira)" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Label fx:id="lbDiretor" text="George RR Martin (Mentira)" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -183,7 +194,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Hodor" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <Label fx:id="lbAtorPrincipal" text="Hodor" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -193,7 +204,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="30+" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                        <Label fx:id="lbFaixaEtaria" text="30+" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -203,7 +214,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Série" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="lbTipo" text="Série" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -213,14 +224,14 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="S03E05" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Label fx:id="lbTempEpisodio" text="S03E05" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                      </children>
                   </GridPane>
-                  <Button layoutX="97.0" layoutY="815.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="197.0" style="-fx-background-color: #333;" text="Adicionar aos Favoritos" textFill="WHITE">
+                  <Button fx:id="btAdicionarAosFavoritos" layoutX="97.0" layoutY="815.0" mnemonicParsing="false" onAction="#adicionarOuRemoverFavorito" prefHeight="54.0" prefWidth="197.0" style="-fx-background-color: #333;" text="Adicionar aos Favoritos" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>

@@ -3,13 +3,16 @@ package marcelzael.netflixJavaFx2.app;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.dataModel.MidiaDataModel;
 import marcelzael.netflixJavaFx2.entity.Midia;
@@ -31,6 +34,14 @@ public class AdminViewApp extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		stage.setTitle("Tela de catálogo");
+		
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
 
 		initRootLayout();
 	}
@@ -56,8 +67,14 @@ public class AdminViewApp extends Application{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
+	}
+	
+	public ObservableList<MidiaDataModel> recarregarTabelaFilmes() {
+		listaMidias.clear();
+		for (Midia midia : new MidiaHibernateDAO().listAll(Midia.class)) {
+			listaMidias.add(new MidiaDataModel(midia));
+		}
+		return listaMidias;
 	}
 
 	public Stage getStage() {
@@ -79,6 +96,8 @@ public class AdminViewApp extends Application{
 	public ObservableList<MidiaDataModel> getListaMidias() {
 		return listaMidias;
 	}
+	
+	
 
 	public void setListaMidias(ObservableList<MidiaDataModel> listaMidias) {
 		this.listaMidias = listaMidias;

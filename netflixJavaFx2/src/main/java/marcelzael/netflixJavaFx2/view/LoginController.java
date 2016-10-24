@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
 				Stage stage = (Stage) btLogin.getScene().getWindow();
 			    stage.close();
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 			
 			
@@ -71,8 +71,8 @@ public class LoginController implements Initializable {
 	}
 	
 	@FXML
-	private void actionEsqueciSenha(ActionEvent event) {
-		
+	private void actionCriarConta(ActionEvent event) {
+		loginViewApp.showCreateAccountDialog();
 	}
 
 	@Override

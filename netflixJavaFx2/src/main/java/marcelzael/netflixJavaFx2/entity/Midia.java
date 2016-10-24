@@ -1,7 +1,9 @@
 package marcelzael.netflixJavaFx2.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 /**
@@ -62,6 +66,9 @@ public class Midia implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoFaixaEtaria faixaEtaria;
 	
+	@ManyToMany(mappedBy="favoritos", cascade=CascadeType.ALL)
+	private List<Usuario> favoritantes;
+	
 	public Midia() {
 		super();
 	}
@@ -107,6 +114,29 @@ public class Midia implements Serializable {
 
 	public String getDescricao() {
 		return descricao;
+	}
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Midia other = (Midia) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 	public void setDescricao(String descricao) {

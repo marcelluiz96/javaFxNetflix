@@ -70,6 +70,7 @@ public class AdminController {
 	@FXML Button btSalvar;
 	@FXML Button btDeletar;
 	@FXML Button btAlterarCapa;
+	@FXML Button btExibirCapa;
 
 	@FXML private TableView<MidiaDataModel> tvFilmes;
 	@FXML private TableColumn<MidiaDataModel, Long> columnIdFilme;
@@ -189,6 +190,8 @@ public class AdminController {
 			filmeACadastrar.setTipoFilme(cbTipoFilmeCadastro.getValue());
 
 			midiaHibernateDAO.persist(filmeACadastrar);
+			filmeACadastrar = new Midia();
+			tvFilmes.setItems(adminViewApp.recarregarTabelaFilmes());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -249,6 +252,10 @@ public class AdminController {
 	public void deletarFilme(ActionEvent event) {
 		if (filmeSelecionado.getId() != 0) {
 			midiaHibernateDAO.delete(filmeSelecionado);
+			tvFilmes.getSelectionModel().clearSelection();
+			tvFilmes.setItems(adminViewApp.recarregarTabelaFilmes());
+		} else {
+			//TODO gerar dialog de erro
 		}
 	}
 
@@ -260,6 +267,21 @@ public class AdminController {
 			filmeSelecionado.setFaixaEtaria(cbTipoFaixaEtaria.getValue());
 			midiaHibernateDAO.update(filmeSelecionado);
 		}
+	}
+	
+	@FXML
+	public void alterarCapaFilme(ActionEvent event) {
+		
+	}
+	
+	@FXML
+	public void alterarConteudoFilme(ActionEvent event) {
+		
+	}
+	
+	@FXML
+	public void exibirCapaFilme(ActionEvent event) {
+		
 	}
 
 

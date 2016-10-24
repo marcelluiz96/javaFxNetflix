@@ -54,13 +54,14 @@ public class GenericHibernateDAO extends HibernateTransactionWrapper{
 	}
 
 	public <T> T getById(Class<T> classe, long id) {
-		getCurrentSession().beginTransaction();
+		Transaction t = getCurrentSession().beginTransaction();
 		Criteria c = getCurrentSession().createCriteria(classe);
 
 		c.add(Restrictions.idEq(id));
 
 		List<T> retorno = c.list();
-
+		t.commit();
+		getCurrentSession().close();
 		if (retorno == null || retorno.isEmpty()) {
 			return null;
 		} else {

@@ -187,7 +187,7 @@
                                           <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="55.0" layoutY="717.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Exibir Capa" textFill="WHITE">
+                                    <Button fx:id="btExibirCapa" layoutX="55.0" layoutY="717.0" mnemonicParsing="false" onAction="#exibirCapaFilme" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Exibir Capa" textFill="WHITE">
                                        <effect>
                                           <DropShadow />
                                        </effect>
