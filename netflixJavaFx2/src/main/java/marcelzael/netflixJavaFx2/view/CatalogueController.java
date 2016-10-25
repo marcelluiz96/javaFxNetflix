@@ -37,6 +37,7 @@ import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
 import marcelzael.netflixJavaFx2.app.AdminViewApp;
 import marcelzael.netflixJavaFx2.app.CatalogueViewApp;
+import marcelzael.netflixJavaFx2.app.MidiaPlayerApp;
 import marcelzael.netflixJavaFx2.entity.Midia;
 import marcelzael.netflixJavaFx2.entity.TipoFaixaEtaria;
 import marcelzael.netflixJavaFx2.entity.TipoFilme;
@@ -49,7 +50,7 @@ public class CatalogueController {
 	private UsuarioHibernateDAO usuarioHibernateDAO;
 	private MidiaHibernateDAO midiaHibernateDAO;
 	private List<Midia> midias;
-	private Midia midiaSelecionada;
+	private static Midia midiaSelecionada;
 
 	//TODO usar meu arquivo css pelo amor de deus
 	private final String STYLE_NORMAL = "-fx-background-color: transparent; -fx-padding: 5, 5, 5, 5;";
@@ -267,6 +268,17 @@ public class CatalogueController {
 			btAdicionarAosFavoritos.setText("Adicionar aos favoritos");
 		}
 	}
+	
+	@FXML
+	public void playMidia() {
+		try {
+			new MidiaPlayerApp().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	@FXML
 	public void acessarPainelAdmin() {
@@ -315,5 +327,13 @@ public class CatalogueController {
 
 	public void setBtPainelAdmin(Button btPainelAdmin) {
 		this.btPainelAdmin = btPainelAdmin;
+	}
+
+	public static Midia getMidiaSelecionada() {
+		return midiaSelecionada;
+	}
+
+	public static void setMidiaSelecionada(Midia midiaSelecionada) {
+		CatalogueController.midiaSelecionada = midiaSelecionada;
 	}
 }

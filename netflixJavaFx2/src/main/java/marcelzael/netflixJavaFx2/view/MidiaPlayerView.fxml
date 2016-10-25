@@ -1,11 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.media.MediaView?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.MidiaPlayerController">
    <center>
       <MediaView fx:id="mv" fitHeight="200.0" fitWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <AnchorPane prefHeight="70.0" prefWidth="1440.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox layoutX="671.0" layoutY="25.0">
+               <children>
+                  <Button fx:id="btPlay" mnemonicParsing="false" onAction="#play" prefHeight="37.0" prefWidth="85.0" text="Play">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btPause" mnemonicParsing="false" onAction="#pause" prefHeight="37.0" prefWidth="85.0" text="Pause">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox layoutX="442.0" layoutY="25.0">
+               <children>
+                  <Button fx:id="btRewind" mnemonicParsing="false" onAction="#rewind10Secs" prefWidth="85.0" text="Rewind">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btSkip" mnemonicParsing="false" onAction="#skip10Secs" prefWidth="85.0" text="Skip">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Button fx:id="btRestart" layoutX="21.0" layoutY="25.0" mnemonicParsing="false" onAction="#restart" prefWidth="85.0" text="Restart">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <HBox layoutX="896.0" layoutY="25.0">
+               <children>
+                  <Button fx:id="btSlow" mnemonicParsing="false" onAction="#decelerate" prefWidth="85.0" text="Slow">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btFast" mnemonicParsing="false" onAction="#accelerate" prefWidth="85.0" text="Fast">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Slider fx:id="volSlider" blockIncrement="5.0" layoutX="1226.0" layoutY="3.0" majorTickUnit="50.0" prefHeight="74.0" prefWidth="205.0" showTickLabels="true" />
+         </children>
+      </AnchorPane>
+   </bottom>
 </BorderPane>
