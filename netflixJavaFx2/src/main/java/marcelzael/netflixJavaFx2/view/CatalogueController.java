@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,10 +50,10 @@ public class CatalogueController {
 	private MidiaHibernateDAO midiaHibernateDAO;
 	private List<Midia> midias;
 	private Midia midiaSelecionada;
-	
+
 	//TODO usar meu arquivo css pelo amor de deus
 	private final String STYLE_NORMAL = "-fx-background-color: transparent; -fx-padding: 5, 5, 5, 5;";
-    private final String STYLE_PRESSED = "-fx-background-color: transparent; -fx-padding: 6 4 4 6;";
+	private final String STYLE_PRESSED = "-fx-background-color: transparent; -fx-padding: 6 4 4 6;";
 
 
 	public CatalogueController() {
@@ -102,11 +103,14 @@ public class CatalogueController {
 	public void initialize() {
 		//TODO Esconder o botão de painel de ADMIN se o usuário não for admin!
 		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		midias =  midiaHibernateDAO.listAll(Midia.class);
+		midias =  midiaHibernateDAO.getAllMidias();
 		carregarTabelaFilmes();
 
+		cbFaixaEtariaFilme.getItems().setAll(TipoFaixaEtaria.values());
+		cbTipoFilme.getItems().setAll(TipoFilme.values());
+
 	}
-	
+
 	@FXML public void filtrar() {
 		HashMap<String, String> filters = new HashMap<>();
 		//TODO colocar if checkboxes dos filtros estão marcados antes de adicionar cada filtro
@@ -115,13 +119,13 @@ public class CatalogueController {
 		if (cCategoriaFilme.isSelected())
 			filters.put("categoria", txCategoriaFilme.getText());
 		if (cAtorPrincipalFilme.isSelected())
-			filters.put("atorprincipal", txAtorPrincipalFilme.getText());
+			filters.put("atorPrincipal", txAtorPrincipalFilme.getText());
 		if (cDiretorFilme.isSelected())
 			filters.put("diretor", txDiretorFilme.getText());
 		if (cTipoFilme.isSelected())
 			filters.put("tipoFilme", cbTipoFilme.getSelectionModel().getSelectedItem().toString());
 		if (cFaixaEtariaFilme.isSelected())
-			filters.put("faixaetaria", cbFaixaEtariaFilme.getSelectionModel().getSelectedItem().toString());
+			filters.put("faixaEtaria", cbFaixaEtariaFilme.getSelectionModel().getSelectedItem().toString());
 		midias = midiaHibernateDAO.findMidias(filters);
 		carregarTabelaFilmes();
 	}
@@ -130,11 +134,13 @@ public class CatalogueController {
 		//Adicionando os filmes
 		int colIndex = 0;
 		int rowIndex = 0;
-		
+		int height = 337;
 		gridPane.getChildren().clear();
 		gridPane.setGridLinesVisible(true);
-//		gridPane.autosize();
-		gridPane.setMinHeight(((int)midias.size() / 4) * 336.5);
+		//		gridPane.setVgap(12);
+		//		gridPane.setHgap(8);
+
+		//		gridPane.setMinHeight(((int)midias.size() / 4) * 338.5);
 		for (Midia midia : midias) {
 			Image image;
 			if (midia.getCapaFilme() != null) {
@@ -145,40 +151,43 @@ public class CatalogueController {
 			}
 
 			ImageView img = new ImageView(image);
-			img.setFitWidth(220);
-			img.setFitHeight(315);
-			
+			img.setFitWidth(222);
+			img.setFitHeight(334);
+
 			ColorAdjust colorAdjust = new ColorAdjust();
-            colorAdjust.setBrightness(0.0);
+			colorAdjust.setBrightness(0.0);
 
-            img.setEffect(colorAdjust);
+			img.setEffect(colorAdjust);
 
-            img.setOnMouseEntered(e -> {
+			img.setOnMouseEntered(e -> {
 
-                Timeline fadeInTimeline = new Timeline(
-                        new KeyFrame(Duration.seconds(0), 
-                                new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
-                                new KeyFrame(Duration.seconds(0.5), new KeyValue(colorAdjust.brightnessProperty(), -0.3, Interpolator.LINEAR)
-                                ));
-                fadeInTimeline.setCycleCount(1);
-                fadeInTimeline.setAutoReverse(false);
-                fadeInTimeline.play();
+				Timeline fadeInTimeline = new Timeline(
+						new KeyFrame(Duration.seconds(0), 
+								new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
+						new KeyFrame(Duration.seconds(0.5), new KeyValue(colorAdjust.brightnessProperty(), -0.3, Interpolator.LINEAR)
+								));
+				fadeInTimeline.setCycleCount(1);
+				fadeInTimeline.setAutoReverse(false);
+				fadeInTimeline.play();
 
-            });
+			});
 
-            img.setOnMouseExited(e -> {
+			Tooltip t = new Tooltip(midia.getNome());
+			Tooltip.install(img.getParent(), t);
 
-                Timeline fadeOutTimeline = new Timeline(
-                        new KeyFrame(Duration.seconds(0), 
-                                new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
-                                new KeyFrame(Duration.seconds(0.5), new KeyValue(colorAdjust.brightnessProperty(), 0, Interpolator.LINEAR)
-                                ));
-                fadeOutTimeline.setCycleCount(1);
-                fadeOutTimeline.setAutoReverse(false);
-                fadeOutTimeline.play();
+			img.setOnMouseExited(e -> {
 
-            });
-			
+				Timeline fadeOutTimeline = new Timeline(
+						new KeyFrame(Duration.seconds(0), 
+								new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
+						new KeyFrame(Duration.seconds(0.5), new KeyValue(colorAdjust.brightnessProperty(), 0, Interpolator.LINEAR)
+								));
+				fadeOutTimeline.setCycleCount(1);
+				fadeOutTimeline.setAutoReverse(false);
+				fadeOutTimeline.play();
+
+			});
+
 			img.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 				@Override
@@ -187,35 +196,38 @@ public class CatalogueController {
 					int row = GridPane.getRowIndex(img);
 					selecionarMidia(midias.get((row * 4) + col));
 				}
-				
+
 			});
-			
-			gridPane.add(img, colIndex, rowIndex);
-			GridPane.setHalignment(img, HPos.CENTER);
-			GridPane.setValignment(img, VPos.CENTER);
-//			GridPane.setHgrow(img, Priority.ALWAYS);
-//			GridPane.setVgrow(img, Priority.ALWAYS);
 
-			Label labelNome = new Label(midia.getNome());
-			labelNome.setMinWidth(220);
-			labelNome.setTextAlignment(TextAlignment.CENTER);
-			labelNome.setAlignment(Pos.BOTTOM_CENTER);
-			labelNome.setContentDisplay(ContentDisplay.CENTER);
-			labelNome.setStyle("-fx-background-color: #FFF; -fx-font-size: 20; -fx-font-style: italic;-fx-background-radius: 5;");
-			gridPane.add(labelNome, colIndex, rowIndex);
-			GridPane.setHalignment(labelNome, HPos.CENTER);
-			GridPane.setValignment(labelNome, VPos.BOTTOM);
 
-			if (colIndex == 3) {
+//						GridPane.setHalignment(img, HPos.CENTER);
+//						GridPane.setValignment(img, VPos.CENTER);
+//						GridPane.setHgrow(img, Priority.ALWAYS);
+//						GridPane.setVgrow(img, Priority.ALWAYS);
+						Label labelNome = new Label(midia.getNome());
+						labelNome.setMinWidth(220);
+						labelNome.setTextAlignment(TextAlignment.CENTER);
+						labelNome.setAlignment(Pos.BOTTOM_CENTER);
+						labelNome.setContentDisplay(ContentDisplay.CENTER);
+						labelNome.setStyle("-fx-background-color: rgba(100, 100, 100, 0.7);-fx-text-fill:#FFF;-fx-font-size: 20; -fx-font-style: italic;-fx-background-radius: 2;");
+						
+						GridPane.setHalignment(labelNome, HPos.CENTER);
+						GridPane.setValignment(labelNome, VPos.BOTTOM);
+
+
+			if (colIndex == 4) {
 				colIndex = 0;
 				rowIndex++;
-//				gridPane.set(gridPane.getPrefHeight() + 336.5);
-			} else {
-				colIndex++;
+				height += 337;
+				gridPane.setMinHeight(height);
 			}
+
+			gridPane.add(img, colIndex, rowIndex);
+			gridPane.add(labelNome, colIndex, rowIndex);
+			colIndex++;
 		}
 	}
-	
+
 	@FXML
 	public void adicionarOuRemoverFavorito(ActionEvent event) {
 		Usuario user = usuarioHibernateDAO.getById(Usuario.class, getUsuarioLogado().getId());
@@ -230,10 +242,10 @@ public class CatalogueController {
 			btAdicionarAosFavoritos.setText("Adicionar aos favoritos");
 		}
 		usuarioHibernateDAO.update(user);
-		
-		
+
+
 	}
-	
+
 	public void selecionarMidia(Midia midia) {
 		midiaSelecionada = midia;
 		lbNome.setText(midia.getNome());
@@ -246,7 +258,7 @@ public class CatalogueController {
 		lbFaixaEtaria.setText(midia.getFaixaEtaria().toString());
 		lbTempEpisodio.setText(midia.getTempEpisodio());
 		lbTipo.setText(midia.getTipoFilme().toString());
-		
+
 		Usuario user = usuarioHibernateDAO.getById(Usuario.class, getUsuarioLogado().getId());
 		List<Midia> favoritos = midiaHibernateDAO.getFavoritos(user);
 		if (favoritos.contains(midiaSelecionada)) {
@@ -268,7 +280,7 @@ public class CatalogueController {
 		}
 
 	}
-	
+
 	public Usuario getUsuarioLogado() {
 		return LoginController.getUsuarioLogado();
 	}

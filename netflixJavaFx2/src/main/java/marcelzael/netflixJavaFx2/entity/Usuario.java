@@ -37,7 +37,7 @@ public class Usuario implements Serializable{
 	
 	private boolean admin;
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private TipoFaixaEtaria idade;
 	
 	@ManyToMany

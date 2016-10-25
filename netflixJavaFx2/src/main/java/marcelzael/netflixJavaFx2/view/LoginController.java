@@ -7,9 +7,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
@@ -61,7 +63,12 @@ public class LoginController implements Initializable {
 			
 			
 		} else {
-			//Usuário ou senha incorretos
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erro!");
+			alert.setHeaderText("Login ou senha incorretos");
+			alert.setContentText("Verifique se os dados foram inseridos corretamente, e se a tecla CAPS LOCK está "
+					+ "ativada.");
+			alert.show();	
 		}
 	}
 	

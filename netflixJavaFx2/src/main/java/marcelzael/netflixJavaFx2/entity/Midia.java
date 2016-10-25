@@ -63,7 +63,7 @@ public class Midia implements Serializable {
 
 	private String atorPrincipal;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private TipoFaixaEtaria faixaEtaria;
 	
 	@ManyToMany(mappedBy="favoritos", cascade=CascadeType.ALL)
