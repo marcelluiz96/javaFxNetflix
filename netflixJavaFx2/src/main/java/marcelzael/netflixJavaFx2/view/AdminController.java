@@ -70,7 +70,7 @@ public class AdminController {
 	@FXML Button btSalvar;
 	@FXML Button btDeletar;
 	@FXML Button btAlterarCapa;
-	@FXML Button btExibirCapa;
+	@FXML Button btAlterarMidia;
 
 	@FXML private TableView<MidiaDataModel> tvFilmes;
 	@FXML private TableColumn<MidiaDataModel, Long> columnIdFilme;
@@ -238,14 +238,8 @@ public class AdminController {
 	@FXML
 	public void selecionarFilmeTabela(MouseEvent event) {
 		filmeSelecionado = tvFilmes.getSelectionModel().getSelectedItem().asMidiaObject();
-		//		txNomeFilme.setText(filmeSelecionado.getNome());
-		//		taDescricao.setText(filmeSelecionado.getDescricao());
-		//		txAno.setText(String.valueOf(filmeSelecionado.getAno()));
-
-		//A PREGUIÇA DE TER QUE FAZER ISSO DE PASSAR TODO VALOR DO OBJETO CLICADO PARA VÁRIOS TEXTFIELDS 
-		// E ENTÃO PASSAR TUDO O QUE O CARA DIGITOU DE VOLTA PRA O OBJETO A PERSISTIR NO BANCO
-		// VAI ME FAZER QUERER APRENDAR A DAR UM BIND ENTRE ESSE OBJETO E OS CAMPOS.
-		// TODO APRENDER PRA A SPRINT 2
+		cbTipoFilme.getSelectionModel().select(filmeSelecionado.getTipoFilme());
+		cbTipoFaixaEtaria.getSelectionModel().select(filmeSelecionado.getFaixaEtaria());
 	}
 
 	@FXML
@@ -265,18 +259,46 @@ public class AdminController {
 			filmeSelecionado.setNome(txNomeFilme.getText());
 			filmeSelecionado.setTipoFilme(cbTipoFilme.getValue());
 			filmeSelecionado.setFaixaEtaria(cbTipoFaixaEtaria.getValue());
-			midiaHibernateDAO.update(filmeSelecionado);
+			
+			if (filmeSelecionado.getConteudoFilme() == null) {
+				midiaHibernateDAO.updateFromProjection(filmeSelecionado);
+			} else {
+				midiaHibernateDAO.update(filmeSelecionado);
+			}
+			
 		}
 	}
 	
 	@FXML
 	public void alterarCapaFilme(ActionEvent event) {
-		
+		try {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Escolha o filme");
+			fileChooser.setSelectedExtensionFilter(new ExtensionFilter("Apenas (*.mp4, *.wav, *.flv)", "*.mp4,*.wav,*.flv"));
+			File tempFile = fileChooser.showOpenDialog(btEscolherCapa.getScene().getWindow());
+			if (tempFile != null) {
+				filmeSelecionado.setCapaFilme(Files.readAllBytes(tempFile.toPath()));
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	@FXML
 	public void alterarConteudoFilme(ActionEvent event) {
-		
+		try {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Escolha o filme");
+			fileChooser.setSelectedExtensionFilter(new ExtensionFilter("Apenas (*.mp4, *.wav, *.flv)", "*.mp4,*.wav,*.flv"));
+			File tempFile = fileChooser.showOpenDialog(btEscolherCapa.getScene().getWindow());
+			if (tempFile != null) {
+				filmeSelecionado.setConteudoFilme(Files.readAllBytes(tempFile.toPath()));
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	@FXML

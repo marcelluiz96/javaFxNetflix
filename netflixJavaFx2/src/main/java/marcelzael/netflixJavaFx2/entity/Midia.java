@@ -90,6 +90,25 @@ public class Midia implements Serializable {
 		this.atorPrincipal = atorPrincipal;
 		this.faixaEtaria = faixaEtaria;
 	}
+	
+	public Midia(long id, String nome, String descricao, int ano, TipoFilme tipoFilme, byte[] capaFilme,
+			String tempEpisodio, String duracao, String categoria, String diretor, String atorPrincipal,
+			TipoFaixaEtaria faixaEtaria) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.ano = ano;
+		this.tipoFilme = tipoFilme;
+		this.conteudoFilme = conteudoFilme;
+		this.capaFilme = capaFilme;
+		this.tempEpisodio = tempEpisodio;
+		this.duracao = duracao;
+		this.categoria = categoria;
+		this.diretor = diretor;
+		this.atorPrincipal = atorPrincipal;
+		this.faixaEtaria = faixaEtaria;
+	}
 
 	/**
 	 * 

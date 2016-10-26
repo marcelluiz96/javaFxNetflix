@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1440.0" style="-fx-background-image: url(&quot;http://wallpapersiq.com/wp-content/uploads/img/interstellar-black-hole-1280x1024.jpg&quot;); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.LoginController">
+<AnchorPane prefHeight="900.0" prefWidth="1440.0" style="-fx-background-size: cover;" styleClass="loginbg" stylesheets="@../../../resources/css/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.LoginController">
    <children>
       <AnchorPane layoutX="578.0" layoutY="254.0" prefHeight="393.0" prefWidth="285.0" style="-fx-background-color: #FFF; -fx-border-radius: 10 10 0 0; -fx-background-radius: 5 5 5 5;">
          <effect>

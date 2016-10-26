@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.io.FileUtils;
 
@@ -11,20 +12,26 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.Modality;
 import javafx.util.Duration;
+import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.app.MidiaPlayerApp;
+import marcelzael.netflixJavaFx2.entity.Midia;
 
 public class MidiaPlayerController implements Initializable{
 
 	MidiaPlayerApp midiaPlayerApp;
+	MidiaHibernateDAO midiaHibernateDAO;
 
 	@FXML private MediaView mv;
 	MediaPlayer mp;
@@ -38,36 +45,64 @@ public class MidiaPlayerController implements Initializable{
 	@FXML private Button btFast;
 	@FXML private Button btSlow;
 	@FXML private Button btRestart;
+	
+	Midia midiaAExibir;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		File movie = new File("/temp/movie");
-		try {
-			FileUtils.writeByteArrayToFile(movie, CatalogueController.getMidiaSelecionada().getConteudoFilme());
+		midiaHibernateDAO = new MidiaHibernateDAO();
+		ProgressIndicator indicator = new ProgressIndicator();
+		
+		
+		Task<Boolean> task = new Task<Boolean>() {
+		    @Override public Boolean call() throws IOException {
+		        // do your operation in here
+		    	midiaAExibir = midiaHibernateDAO.getById(Midia.class, CatalogueController.
+		    			getMidiaSelecionada().getId());
+		    	FileUtils.writeByteArrayToFile(movie, midiaAExibir.getConteudoFilme());
+		    	
+		        return true;
+		    }
+		};
 
-			midia = new Media(movie.toPath().toUri().toString());
-			mp = new MediaPlayer(midia);
-			mv.setMediaPlayer(mp);
-			mp.setAutoPlay(true);
+		task.setOnRunning((e) -> indicator.setVisible(true));
+		task.setOnSucceeded((e) -> {
+		    indicator.setVisible(false);
+		    try {
+				Boolean returnValue = task.get();
+			} catch (InterruptedException | ExecutionException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		    // process return value again in JavaFX thread
+		});
+		task.setOnFailed((e) -> {
+		  // eventual error handling by catching exceptions from task.get()  
+		});
+		new Thread(task).start();
+		
+		
 
-			DoubleProperty width = mv.fitWidthProperty();
-			DoubleProperty height = mv.fitHeightProperty();
-			width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
-			height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
+		midia = new Media(movie.toPath().toUri().toString());
+		mp = new MediaPlayer(midia);
+		mv.setMediaPlayer(mp);
+		mp.setAutoPlay(true);
 
-			volSlider.setValue(mp.getVolume() * 100);
-			volSlider.valueChangingProperty().addListener(new InvalidationListener() {
+		DoubleProperty width = mv.fitWidthProperty();
+		DoubleProperty height = mv.fitHeightProperty();
+		width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
+		height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
-				@Override
-				public void invalidated(Observable observable) {
-					mp.setVolume(volSlider.getValue() / 100);
+		volSlider.setValue(mp.getVolume() * 100);
+		volSlider.valueChangingProperty().addListener(new InvalidationListener() {
 
-				}
-			});
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			@Override
+			public void invalidated(Observable observable) {
+				mp.setVolume(volSlider.getValue() / 100);
+
+			}
+		});
 	}
 
 	public void play(ActionEvent event) {

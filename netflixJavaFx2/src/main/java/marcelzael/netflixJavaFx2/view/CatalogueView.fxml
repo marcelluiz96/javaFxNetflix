@@ -17,7 +17,7 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.CatalogueController">
    <children>
-      <SplitPane dividerPositions="0.5" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-image: url(&quot;http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background-5.jpg&quot;); -fx-background-size: cover;">
+      <SplitPane dividerPositions="0.5" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-size: cover;" styleClass="whitebg" stylesheets="@../../../resources/css/style.css">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="472.0">
                <children>

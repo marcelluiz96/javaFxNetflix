@@ -22,5 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Marcel/Downloads/antlr-3.5.2-complete.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

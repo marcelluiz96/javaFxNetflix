@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-image: url(&quot;http://vignette4.wikia.nocookie.net/gameofthrones/images/9/97/The_Wall_from_the_south.jpg/revision/latest?cb=20150323201042&quot;);" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.CreateAccountDialogController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1440.0" styleClass="createaccbg" stylesheets="@../../../resources/css/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.CreateAccountDialogController">
    <children>
       <AnchorPane layoutX="526.0" layoutY="83.0" prefHeight="763.0" prefWidth="442.0" style="-fx-background-color: #FFF; -fx-border-radius: 10 10 0 0; -fx-background-radius: 5 5 5 5;">
          <children>

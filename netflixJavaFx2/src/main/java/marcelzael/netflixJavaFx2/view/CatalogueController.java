@@ -272,6 +272,7 @@ public class CatalogueController {
 	@FXML
 	public void playMidia() {
 		try {
+			
 			new MidiaPlayerApp().start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

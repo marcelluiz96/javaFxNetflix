@@ -34,7 +34,7 @@
                      <children>
                         <SplitPane dividerPositions="0.29797979797979796" layoutX="47.0" layoutY="41.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" style="-fx-background-color: #CCC;">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" style="-fx-background-color: #CCC;" styleClass="whitebg" stylesheets="@../../../resources/css/style.css">
                                  <children>
                                     <HBox layoutX="55.0" layoutY="778.0">
                                        <children>
@@ -59,7 +59,7 @@
                                           </Button>
                                        </children>
                                     </HBox>
-                                    <GridPane prefHeight="669.0" prefWidth="362.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane prefHeight="669.0" prefWidth="362.0" stylesheets="@../../../resources/css/style.css" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.3333740234375" minWidth="10.0" prefWidth="159.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="266.0" />
@@ -179,7 +179,7 @@
                                           </ChoiceBox>
                                        </children>
                                     </GridPane>
-                                    <Button fx:id="btAlterarCapa" layoutX="217.0" layoutY="717.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Alterar Capa" textFill="WHITE">
+                                    <Button fx:id="btAlterarCapa" layoutX="217.0" layoutY="717.0" mnemonicParsing="false" onAction="#alterarCapaFilme" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Alterar Capa" textFill="WHITE">
                                        <effect>
                                           <DropShadow />
                                        </effect>
@@ -187,7 +187,7 @@
                                           <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btExibirCapa" layoutX="55.0" layoutY="717.0" mnemonicParsing="false" onAction="#exibirCapaFilme" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Exibir Capa" textFill="WHITE">
+                                    <Button fx:id="btAlterarConteudo" layoutX="55.0" layoutY="717.0" mnemonicParsing="false" onAction="#alterarConteudoFilme" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Alterar Mídia" textFill="WHITE">
                                        <effect>
                                           <DropShadow />
                                        </effect>
@@ -199,7 +199,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="378.0">
                                  <children>
-                                    <TableView fx:id="tvFilmes" layoutX="47.0" layoutY="47.0" onMouseClicked="#selecionarFilmeTabela" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tvFilmes" layoutX="47.0" layoutY="47.0" onMouseClicked="#selecionarFilmeTabela" prefHeight="200.0" prefWidth="200.0" styleClass="whitebg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
                                           <TableColumn fx:id="columnIdFilme" prefWidth="75.0" text="Id" />
                                         <TableColumn fx:id="columnNomeFilme" prefWidth="75.0" text="Nome" />
@@ -225,7 +225,7 @@
           </Tab>
           <Tab text="Cadastro de Filmes">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="whitebg" stylesheets="@../../../resources/css/style.css">
                      <children>
                         <GridPane layoutX="78.0" layoutY="124.0" prefHeight="751.0" prefWidth="669.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="792.0" AnchorPane.topAnchor="124.0">
                            <columnConstraints>
@@ -410,7 +410,7 @@
           </Tab>
           <Tab text="Cadastro de usuários">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="whitebg" stylesheets="@../../../resources/css/style.css">
                      <children>
                         <Label layoutX="442.0" layoutY="42.0" text="Cadastrar novo Usuário">
                            <font>

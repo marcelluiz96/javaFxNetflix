@@ -17,3 +17,7 @@
 .whitebg {
 	-fx-background-image: url("../images/whitebg.jpg");
 }
+
+.darkbg {
+	-fx-background-image: url("../images/blackie.jpg");
+}
