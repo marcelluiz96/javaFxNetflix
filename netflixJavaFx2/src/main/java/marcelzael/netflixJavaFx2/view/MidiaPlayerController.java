@@ -1,11 +1,8 @@
 package marcelzael.netflixJavaFx2.view;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import org.apache.commons.io.FileUtils;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -13,14 +10,19 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.app.MidiaPlayerApp;
@@ -56,69 +58,60 @@ public class MidiaPlayerController implements Initializable{
 		File movie = new File("/temp/movie");
 		midiaHibernateDAO = new MidiaHibernateDAO();
 
-		try {
-			midiaAExibir = midiaHibernateDAO.getById(Midia.class, CatalogueController.
-					getMidiaSelecionada().getId());
+		midiaAExibir = midiaHibernateDAO.getById(Midia.class, CatalogueController.
+				getMidiaSelecionada().getId());
 
-			FileUtils.writeByteArrayToFile(movie, midiaAExibir.getConteudoFilme());
+		midia = new Media(midiaAExibir.getPathFilme());
+		mp = new MediaPlayer(midia);
+		duration = mp.getMedia().getDuration();
+		lbTotalTime.setText(formatTime(duration, duration));
+		mv.setMediaPlayer(mp);
+		mp.setAutoPlay(true);
 
-			midia = new Media(movie.toPath().toUri().toString());
-			mp = new MediaPlayer(midia);
-			duration = mp.getMedia().getDuration();
-			mv.setMediaPlayer(mp);
-			mp.setAutoPlay(true);
+		DoubleProperty width = mv.fitWidthProperty();
+		DoubleProperty height = mv.fitHeightProperty();
+		width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
+		height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
-			DoubleProperty width = mv.fitWidthProperty();
-			DoubleProperty height = mv.fitHeightProperty();
-			width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
-			height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
+		volSlider.setValue(mp.getVolume() * 100.0);
 
-			volSlider.setValue(mp.getVolume() * 100.0);
-			volSlider.valueChangingProperty().addListener(new InvalidationListener() {
+		
+		
+		timeSlider.setOnMousePressed(new EventHandler<MouseEvent>(){
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
+		    }
+		});
+		
+		timeSlider.setOnMouseDragged(new EventHandler<Event>() {
+			@Override
+			public void handle(Event event) {
+				mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
+			}
+		});
 
-				@Override
-				public void invalidated(Observable observable) {
-					mp.setVolume(volSlider.getValue() / 100.0);
+		mp.currentTimeProperty().addListener(new InvalidationListener() {
 
-				}
-			});
+			@Override
+			public void invalidated(Observable observable) {
+				updateValues();	
+			}
+		});
 
-			timeSlider.valueProperty().addListener(new InvalidationListener() {
+		mp.setOnReady(new Runnable() {
+			public void run() {
+				duration = mp.getMedia().getDuration();
+				updateValues();
+			}
+		});
 
-				@Override
-				public void invalidated(Observable observable) {
-					if (timeSlider.isValueChanging()) {
-						mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
-					}
-
-				}
-			});
-
-			mp.currentTimeProperty().addListener(new InvalidationListener() {
-
-				@Override
-				public void invalidated(Observable observable) {
-					updateValues();		
-				}
-			});
-
-			mp.setOnReady(new Runnable() {
-				public void run() {
-					duration = mp.getMedia().getDuration();
-					updateValues();
-				}
-			});
-
-			mp.setCycleCount(MediaPlayer.INDEFINITE);
-
-
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		mp.setCycleCount(MediaPlayer.INDEFINITE);
+		
 	}
 
+	
+	
 	protected void updateValues() {
 		if (lbTime != null && timeSlider != null && volSlider != null) {
 			Platform.runLater(new Runnable() {
@@ -144,27 +137,44 @@ public class MidiaPlayerController implements Initializable{
 	}
 
 	public void play(ActionEvent event) {
+		if (mp.getStatus().equals(MediaPlayer.Status.STOPPED)) {
+			mp.seek(mp.getStartTime());
+			timeSlider.setValue(mp.getCurrentTime().divide(duration).toMillis() * 100.0);	
+		}
 		mp.play();
 	}
 	public void pause(ActionEvent event) {
 		mp.pause();
 	}
 	public void skip10Secs(ActionEvent event) {
-		mp.seek(mp.getCurrentTime().add(new Duration(10)));
+		mp.seek(mp.getCurrentTime().add(new Duration(10000)));
+		timeSlider.setValue(mp.getCurrentTime().divide(duration).toMillis() * 100.0);
 	}
 	public void rewind10Secs(ActionEvent event) {
-		mp.seek(mp.getCurrentTime().subtract(new Duration(10)));
+		mp.seek(mp.getCurrentTime().subtract(new Duration(10000)));
+		timeSlider.setValue(mp.getCurrentTime().divide(duration).toMillis() * 100.0);
 	}
 	public void restart(ActionEvent event) {
 		mp.seek(mp.getStartTime());
+		timeSlider.setValue(mp.getCurrentTime().divide(duration).toMillis() * 100.0);
 		mp.play();
 	}
 	public void accelerate(ActionEvent event) {
-		mp.setRate(2);
+		mp.setRate(mp.getRate() * 2);
 	}
 	public void decelerate(ActionEvent event) {
-		mp.setRate(0.5);
+		mp.setRate(mp.getRate() * 0.5);
 	}
+	public void stop(ActionEvent event) {
+		mp.stop();
+	}
+	
+	public void close() {
+		mp.stop();
+		mp.dispose();
+	}
+	
+	
 
 	public MidiaPlayerApp getMidiaPlayerApp() {
 		return midiaPlayerApp;

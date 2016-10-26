@@ -71,3 +71,9 @@
     -fx-background-position: center;
 }
 
+.stop {
+	-fx-background-image: url('../icons/Stop-48.png');
+	-fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+

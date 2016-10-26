@@ -45,9 +45,7 @@ public class Midia implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoFilme tipoFilme;
 	
-	@Column( name = "conteudoFilme" )
-	@Lob
-	private byte[] conteudoFilme;
+	private String pathFilme;
 	
 	@Column (name="capaFilme")
 	@Lob
@@ -73,7 +71,7 @@ public class Midia implements Serializable {
 		super();
 	}
 
-	public Midia(String nome, String descricao, int ano, TipoFilme tipoFilme, byte[] conteudoFilme, byte[] capaFilme,
+	public Midia(String nome, String descricao, int ano, TipoFilme tipoFilme, String pathFilme, byte[] capaFilme,
 			String tempEpisodio, String duracao, String categoria, String diretor, String atorPrincipal,
 			TipoFaixaEtaria faixaEtaria) {
 		super();
@@ -81,7 +79,7 @@ public class Midia implements Serializable {
 		this.descricao = descricao;
 		this.ano = ano;
 		this.tipoFilme = tipoFilme;
-		this.conteudoFilme = conteudoFilme;
+		this.pathFilme = pathFilme;
 		this.capaFilme = capaFilme;
 		this.tempEpisodio = tempEpisodio;
 		this.duracao = duracao;
@@ -100,7 +98,7 @@ public class Midia implements Serializable {
 		this.descricao = descricao;
 		this.ano = ano;
 		this.tipoFilme = tipoFilme;
-		this.conteudoFilme = conteudoFilme;
+//		this.pathFilme = pathFilme;
 		this.capaFilme = capaFilme;
 		this.tempEpisodio = tempEpisodio;
 		this.duracao = duracao;
@@ -178,12 +176,21 @@ public class Midia implements Serializable {
 		this.tipoFilme = tipoFilme;
 	}
 
-	public byte[] getConteudoFilme() {
-		return conteudoFilme;
+
+	public String getPathFilme() {
+		return pathFilme;
 	}
 
-	public void setConteudoFilme(byte[] conteudoFilme) {
-		this.conteudoFilme = conteudoFilme;
+	public void setPathFilme(String pathFilme) {
+		this.pathFilme = pathFilme;
+	}
+
+	public List<Usuario> getFavoritantes() {
+		return favoritantes;
+	}
+
+	public void setFavoritantes(List<Usuario> favoritantes) {
+		this.favoritantes = favoritantes;
 	}
 
 	public byte[] getCapaFilme() {

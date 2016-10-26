@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.commons.io.FileUtils;
+
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -220,6 +222,9 @@ public class AdminController {
 			midiaHibernateDAO.persist(filmeACadastrar);
 			filmeACadastrar = new Midia();
 			tvFilmes.setItems(adminViewApp.recarregarTabelaFilmes());
+			
+			Alert alert = new Alert(AlertType.INFORMATION, "Filme cadastrado com sucesso!", ButtonType.OK);
+			alert.show();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -255,7 +260,13 @@ public class AdminController {
 			fileChooser.setSelectedExtensionFilter(new ExtensionFilter("Apenas (*.mp4, *.wav, *.flv)", "*.mp4,*.wav,*.flv"));
 			File tempFile = fileChooser.showOpenDialog(btEscolherCapa.getScene().getWindow());
 			if (tempFile != null) {
-				filmeACadastrar.setConteudoFilme(Files.readAllBytes(tempFile.toPath()));
+				File midiaFile = new File("filmes/" +tempFile.getName());
+				File parent = midiaFile.getParentFile();
+				if(!parent.exists() && !parent.mkdirs()){
+					throw new IllegalStateException("Couldn't create dir: " + parent);
+				}
+				FileUtils.copyFile(tempFile, midiaFile);
+				filmeACadastrar.setPathFilme(midiaFile.toPath().toUri().toString());
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -288,11 +299,9 @@ public class AdminController {
 			filmeSelecionado.setTipoFilme(cbTipoFilme.getValue());
 			filmeSelecionado.setFaixaEtaria(cbTipoFaixaEtaria.getValue());
 
-			if (filmeSelecionado.getConteudoFilme() == null) {
-				midiaHibernateDAO.updateFromProjection(filmeSelecionado);
-			} else {
-				midiaHibernateDAO.update(filmeSelecionado);
-			}
+
+			midiaHibernateDAO.update(filmeSelecionado);
+
 
 		}
 	}
@@ -321,7 +330,13 @@ public class AdminController {
 			fileChooser.setSelectedExtensionFilter(new ExtensionFilter("Apenas (*.mp4, *.wav, *.flv)", "*.mp4,*.wav,*.flv"));
 			File tempFile = fileChooser.showOpenDialog(btEscolherCapa.getScene().getWindow());
 			if (tempFile != null) {
-				filmeSelecionado.setConteudoFilme(Files.readAllBytes(tempFile.toPath()));
+				File midiaFile = new File("filmes/" +tempFile.getName());
+				File parent = midiaFile.getParentFile();
+				if(!parent.exists() && !parent.mkdirs()){
+				    throw new IllegalStateException("Couldn't create dir: " + parent);
+				}
+				FileUtils.copyFile(tempFile, midiaFile);
+				filmeSelecionado.setPathFilme(midiaFile.toPath().toUri().toString());
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block

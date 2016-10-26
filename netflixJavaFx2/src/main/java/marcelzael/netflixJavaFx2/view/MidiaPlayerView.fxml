@@ -16,36 +16,36 @@
    <bottom>
       <AnchorPane prefHeight="77.0" prefWidth="1440.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btPlay" layoutX="712.0" layoutY="40.0" mnemonicParsing="false" onAction="#play" prefHeight="37.0" prefWidth="85.0" styleClass="play">
+            <Button fx:id="btPlay" layoutX="732.0" layoutY="40.0" mnemonicParsing="false" onAction="#play" prefHeight="37.0" prefWidth="85.0" styleClass="play">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btPause" layoutX="626.0" layoutY="40.0" mnemonicParsing="false" onAction="#pause" prefHeight="37.0" prefWidth="85.0" styleClass="pause">
+            <Button fx:id="btPause" layoutX="646.0" layoutY="40.0" mnemonicParsing="false" onAction="#pause" prefHeight="37.0" prefWidth="85.0" styleClass="pause">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btRewind" layoutX="520.0" layoutY="40.0" mnemonicParsing="false" onAction="#rewind10Secs" prefWidth="85.0" styleClass="rewind">
+            <Button fx:id="btRewind" layoutX="523.0" layoutY="40.0" mnemonicParsing="false" onAction="#rewind10Secs" prefWidth="85.0" styleClass="rewind">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btSkip" layoutX="817.0" layoutY="40.0" mnemonicParsing="false" onAction="#skip10Secs" prefWidth="85.0" styleClass="FastForward">
+            <Button fx:id="btSkip" layoutX="855.0" layoutY="40.0" mnemonicParsing="false" onAction="#skip10Secs" prefWidth="85.0" styleClass="FastForward">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btRestart" layoutX="434.0" layoutY="40.0" mnemonicParsing="false" onAction="#restart" prefWidth="85.0" styleClass="restart">
+            <Button fx:id="btRestart" layoutX="437.0" layoutY="40.0" mnemonicParsing="false" onAction="#restart" prefWidth="85.0" styleClass="restart">
                <font>
                   <Font size="16.0" />
                </font></Button>
-            <Button fx:id="btSlow" layoutX="1007.0" layoutY="40.0" mnemonicParsing="false" onAction="#decelerate" prefWidth="85.0" styleClass="slow">
+            <Button fx:id="btSlow" layoutX="167.0" layoutY="40.0" mnemonicParsing="false" onAction="#decelerate" prefWidth="85.0" styleClass="slow">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btFast" layoutX="1092.0" layoutY="40.0" mnemonicParsing="false" onAction="#accelerate" prefWidth="85.0" styleClass="fast">
+            <Button fx:id="btFast" layoutX="252.0" layoutY="40.0" mnemonicParsing="false" onAction="#accelerate" prefWidth="85.0" styleClass="fast">
                <font>
                   <Font size="16.0" />
                </font>
@@ -66,6 +66,11 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <Button fx:id="btStop" layoutX="941.0" layoutY="40.0" mnemonicParsing="false" onAction="#stop" prefWidth="85.0" styleClass="stop">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </bottom>
