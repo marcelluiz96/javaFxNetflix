@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +23,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -28,11 +32,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.converter.NumberStringConverter;
 import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
 import marcelzael.netflixJavaFx2.app.AdminViewApp;
+import marcelzael.netflixJavaFx2.app.CatalogueViewApp;
 import marcelzael.netflixJavaFx2.app.LoginViewApp;
 import marcelzael.netflixJavaFx2.dataModel.MidiaDataModel;
 import marcelzael.netflixJavaFx2.entity.Midia;
@@ -109,6 +115,10 @@ public class AdminController {
 	@FXML private CheckBox checkBoxAdministradorUsuario;
 	@FXML private Button btCadastrarUsuario;
 
+	//Aba 4: Voltar
+
+	@FXML private TabPane tabPane; 
+
 	@FXML
 	public void initialize() {
 		cbTipoFaixaEtaria.getItems().setAll(TipoFaixaEtaria.values());
@@ -119,11 +129,12 @@ public class AdminController {
 
 		filmeACadastrar = new Midia();
 
-		carregarTabelaFilmes();
+		inicializarListeners();
+		inicializarTabelaFilmes();
 
 	}
 
-	public void carregarTabelaFilmes() {
+	public void inicializarTabelaFilmes() {
 
 		// OBRIGADO CODE.MAKERY OBRIGADO LAMBDAS OBRIGADO JESUS
 
@@ -158,6 +169,23 @@ public class AdminController {
 			//			cbTipoFilme.valueProperty().bind(midiaDataModel2.getTipoFilmeColumnProperty());
 		});
 
+	}
+
+	private void inicializarListeners() {
+		tabPane.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if (newValue.intValue() == 3) {
+					try {
+						new CatalogueViewApp().start(new Stage());
+						Stage stage = (Stage) tabPane.getScene().getWindow();
+						stage.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}	
+			}
+		});
 	}
 
 
@@ -259,16 +287,16 @@ public class AdminController {
 			filmeSelecionado.setNome(txNomeFilme.getText());
 			filmeSelecionado.setTipoFilme(cbTipoFilme.getValue());
 			filmeSelecionado.setFaixaEtaria(cbTipoFaixaEtaria.getValue());
-			
+
 			if (filmeSelecionado.getConteudoFilme() == null) {
 				midiaHibernateDAO.updateFromProjection(filmeSelecionado);
 			} else {
 				midiaHibernateDAO.update(filmeSelecionado);
 			}
-			
+
 		}
 	}
-	
+
 	@FXML
 	public void alterarCapaFilme(ActionEvent event) {
 		try {
@@ -284,7 +312,7 @@ public class AdminController {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void alterarConteudoFilme(ActionEvent event) {
 		try {
@@ -300,10 +328,10 @@ public class AdminController {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void exibirCapaFilme(ActionEvent event) {
-		
+
 	}
 
 

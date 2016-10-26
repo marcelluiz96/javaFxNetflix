@@ -2,6 +2,7 @@ package marcelzael.netflixJavaFx2.view;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +38,7 @@ import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.DAO.UsuarioHibernateDAO;
 import marcelzael.netflixJavaFx2.app.AdminViewApp;
 import marcelzael.netflixJavaFx2.app.CatalogueViewApp;
+import marcelzael.netflixJavaFx2.app.LoginViewApp;
 import marcelzael.netflixJavaFx2.app.MidiaPlayerApp;
 import marcelzael.netflixJavaFx2.entity.Midia;
 import marcelzael.netflixJavaFx2.entity.TipoFaixaEtaria;
@@ -50,6 +52,7 @@ public class CatalogueController {
 	private UsuarioHibernateDAO usuarioHibernateDAO;
 	private MidiaHibernateDAO midiaHibernateDAO;
 	private List<Midia> midias;
+	private List<Midia> favoritos;
 	private static Midia midiaSelecionada;
 
 	//TODO usar meu arquivo css pelo amor de deus
@@ -71,6 +74,7 @@ public class CatalogueController {
 	@FXML private Button btAdicionarAosFavoritos;
 	@FXML private Button btPlay;
 	@FXML private Button btFiltrar;
+	@FXML private Button btSair;
 
 	//checkboxes de ativação dos filtros
 	@FXML private CheckBox cNomeFilme;
@@ -79,6 +83,7 @@ public class CatalogueController {
 	@FXML private CheckBox cDiretorFilme;
 	@FXML private CheckBox cTipoFilme;
 	@FXML private CheckBox cFaixaEtariaFilme;
+	@FXML private CheckBox cApenasFavoritos;
 
 	//Campos de filtro
 	@FXML private TextField txNomeFilme;
@@ -104,11 +109,31 @@ public class CatalogueController {
 	public void initialize() {
 		//TODO Esconder o botão de painel de ADMIN se o usuário não for admin!
 		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		midias =  midiaHibernateDAO.getAllMidias();
+		
+		//Carregando mídias exceto aquelas cuja idade não se adequa ao usuário
+		midias =  midiaHibernateDAO.getAllMidias(getUsuarioLogado());
+		
+		//Lazy load para a lista de favoritos do usuário requer um getById. Ainda é melhor que Eager
+		Usuario user = usuarioHibernateDAO.getById(Usuario.class, getUsuarioLogado().getId());
+		favoritos = midiaHibernateDAO.getFavoritos(getUsuarioLogado());
+		
+		
 		carregarTabelaFilmes();
 
-		cbFaixaEtariaFilme.getItems().setAll(TipoFaixaEtaria.values());
+		List<TipoFaixaEtaria> faixasPermitidas = new ArrayList<>();
+		for (TipoFaixaEtaria faixa: TipoFaixaEtaria.values()) {
+			if (faixa.ordinal() <= getUsuarioLogado().getIdade().ordinal()) {
+				faixasPermitidas.add(faixa);
+			} else break;
+		}
+		
+		cbFaixaEtariaFilme.getItems().setAll(faixasPermitidas);
 		cbTipoFilme.getItems().setAll(TipoFilme.values());
+		
+		//Escondendo o botão para não-admins
+		if (!getUsuarioLogado().isAdmin()) {
+			btPainelAdmin.setVisible(false);
+		}
 
 	}
 
@@ -127,7 +152,9 @@ public class CatalogueController {
 			filters.put("tipoFilme", cbTipoFilme.getSelectionModel().getSelectedItem().toString());
 		if (cFaixaEtariaFilme.isSelected())
 			filters.put("faixaEtaria", cbFaixaEtariaFilme.getSelectionModel().getSelectedItem().toString());
-		midias = midiaHibernateDAO.findMidias(filters);
+		if (cApenasFavoritos.isSelected())
+			filters.put("apenasFavoritos", "");
+		midias = midiaHibernateDAO.findMidias(filters, getUsuarioLogado());
 		carregarTabelaFilmes();
 	}
 
@@ -138,6 +165,7 @@ public class CatalogueController {
 		int height = 337;
 		gridPane.getChildren().clear();
 		gridPane.setGridLinesVisible(true);
+		gridPane.setMinHeight(height);
 		//		gridPane.setVgap(12);
 		//		gridPane.setHgap(8);
 
@@ -231,8 +259,9 @@ public class CatalogueController {
 
 	@FXML
 	public void adicionarOuRemoverFavorito(ActionEvent event) {
-		Usuario user = usuarioHibernateDAO.getById(Usuario.class, getUsuarioLogado().getId());
-		List<Midia> favoritos = midiaHibernateDAO.getFavoritos(user);
+//		Usuario user = usuarioHibernateDAO.getById(Usuario.class, getUsuarioLogado().getId());
+		Usuario user = getUsuarioLogado();
+		
 		if (!favoritos.contains(midiaSelecionada)) {
 			favoritos.add(midiaSelecionada);
 			user.setFavoritos(favoritos);
@@ -261,7 +290,7 @@ public class CatalogueController {
 		lbTipo.setText(midia.getTipoFilme().toString());
 
 		Usuario user = usuarioHibernateDAO.getById(Usuario.class, getUsuarioLogado().getId());
-		List<Midia> favoritos = midiaHibernateDAO.getFavoritos(user);
+//		List<Midia> favoritos = midiaHibernateDAO.getFavoritos(user);
 		if (favoritos.contains(midiaSelecionada)) {
 			btAdicionarAosFavoritos.setText("Remover dos favoritos");
 		} else {
@@ -292,6 +321,13 @@ public class CatalogueController {
 			e.printStackTrace();
 		}
 
+	}
+	
+	@FXML
+	public void sair() throws Exception {
+		new LoginViewApp().start(new Stage());
+		Stage stage = (Stage) btSair.getScene().getWindow();
+		stage.close();
 	}
 
 	public Usuario getUsuarioLogado() {

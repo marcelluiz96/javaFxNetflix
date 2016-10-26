@@ -17,6 +17,7 @@ import marcelzael.netflixJavaFx2.DAO.MidiaHibernateDAO;
 import marcelzael.netflixJavaFx2.dataModel.MidiaDataModel;
 import marcelzael.netflixJavaFx2.entity.Midia;
 import marcelzael.netflixJavaFx2.view.AdminController;
+import marcelzael.netflixJavaFx2.view.LoginController;
 
 public class AdminViewApp extends Application{
 
@@ -25,7 +26,7 @@ public class AdminViewApp extends Application{
 	private ObservableList<MidiaDataModel> listaMidias = FXCollections.observableArrayList(); 
 	
 	public AdminViewApp() {
-		for (Midia midia : new MidiaHibernateDAO().listAll(Midia.class)) {
+		for (Midia midia : new MidiaHibernateDAO().getAllMidias(LoginController.getUsuarioLogado())) {
 			listaMidias.add(new MidiaDataModel(midia));
 		}
 	}

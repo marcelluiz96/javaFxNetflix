@@ -20,7 +20,7 @@ import marcelzael.netflixJavaFx2.entity.Usuario;
 
 public class MidiaHibernateDAO extends GenericHibernateDAO {
 
-	public List<Midia> findMidias(HashMap<String, String> filters) {
+	public List<Midia> findMidias(HashMap<String, String> filters, Usuario usuario) {
 		getCurrentSession().beginTransaction();
 
 		CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
@@ -43,6 +43,8 @@ public class MidiaHibernateDAO extends GenericHibernateDAO {
 				predicates.add(cb.equal(root.get(key), TipoFilme.fromString(value)));
 			} else if (key == "faixaEtaria") {
 				predicates.add(cb.equal(root.get(key), TipoFaixaEtaria.fromString(value)));
+			} else if (key == "apenasFavoritos") {
+				predicates.add(cb.equal(root.join("favoritantes").get("id"), usuario.getId()));
 			} else {	
 				predicates.add(cb.like(root.get(key), "%"+value+"%"));
 			}
@@ -50,6 +52,8 @@ public class MidiaHibernateDAO extends GenericHibernateDAO {
 		
 		query.orderBy(cb.desc(root.get("faixaEtaria")));
 		query.orderBy(cb.desc(root.get("nome")));
+		
+		predicates.add(cb.lessThanOrEqualTo(root.get("faixaEtaria"), usuario.getIdade().ordinal()));
 		
 		query.select(root).where(predicates.toArray(new Predicate[]{}));
 
@@ -94,7 +98,7 @@ public class MidiaHibernateDAO extends GenericHibernateDAO {
 	
 	
 	@SuppressWarnings("deprecation")
-	public List<Midia> getAllMidias() {
+	public List<Midia> getAllMidias(Usuario usuario) {
 		getCurrentSession().beginTransaction();
 
 		CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
@@ -110,6 +114,8 @@ public class MidiaHibernateDAO extends GenericHibernateDAO {
 
 		query.orderBy(cb.desc(root.get("faixaEtaria")));
 		query.orderBy(cb.desc(root.get("nome")));
+		
+		query.where(cb.lessThanOrEqualTo(root.get("faixaEtaria"), usuario.getIdade().ordinal()));
 
 		Query<Midia> q = getCurrentSession().createQuery(query);
 

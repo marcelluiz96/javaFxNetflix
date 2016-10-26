@@ -26,7 +26,7 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1440.0" stylesheets="@../../../../../../resources/css/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="marcelzael.netflixJavaFx2.view.AdminController">
    <children>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Gerenciamento de Filmes">
             <content>
@@ -187,7 +187,7 @@
                                           <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btAlterarConteudo" layoutX="55.0" layoutY="717.0" mnemonicParsing="false" onAction="#alterarConteudoFilme" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Alterar Mídia" textFill="WHITE">
+                                    <Button fx:id="btAlterarMidia" layoutX="55.0" layoutY="717.0" mnemonicParsing="false" onAction="#alterarConteudoFilme" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #0288d1;" text="Alterar Mídia" textFill="WHITE">
                                        <effect>
                                           <DropShadow />
                                        </effect>
@@ -482,6 +482,11 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab fx:id="tabVoltar" text="Voltar">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
