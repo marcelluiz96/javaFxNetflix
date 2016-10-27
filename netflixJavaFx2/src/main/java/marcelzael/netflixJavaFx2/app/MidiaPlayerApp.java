@@ -23,7 +23,7 @@ public class MidiaPlayerApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		stage.setTitle(CatalogueController.getMidiaSelecionada().getNome());
-
+		stage.setResizable(false);
 
 		initRootLayout();
 		

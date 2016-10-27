@@ -74,7 +74,13 @@ public class MidiaPlayerController implements Initializable{
 		height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
 		volSlider.setValue(mp.getVolume() * 100.0);
-
+		volSlider.valueProperty().addListener(new InvalidationListener() {
+		    public void invalidated(Observable ov) {
+		       if (volSlider.isValueChanging()) {
+		           mp.setVolume(volSlider.getValue() / 100.0);
+		       }
+		    }
+		});
 		
 		
 		timeSlider.setOnMousePressed(new EventHandler<MouseEvent>(){

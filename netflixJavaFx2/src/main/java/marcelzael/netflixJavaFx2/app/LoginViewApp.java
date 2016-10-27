@@ -24,7 +24,7 @@ public class LoginViewApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		stage.setTitle("netFliX by Marcel & Izael V0.01");
-		
+		stage.setResizable(false);
 
 //		this.stage.getIcons().add(new Image("file:resources/images/NetflixLogo.png"));
 		//this makes all stages close and the app exit when the main stage is closed

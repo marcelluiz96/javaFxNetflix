@@ -35,6 +35,7 @@ public class AdminViewApp extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		stage.setTitle("Tela de catálogo");
+		stage.setResizable(false);
 		
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

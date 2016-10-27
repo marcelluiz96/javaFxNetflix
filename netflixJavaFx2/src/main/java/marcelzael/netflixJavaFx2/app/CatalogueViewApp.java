@@ -20,7 +20,7 @@ public class CatalogueViewApp extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		stage.setTitle("netFliX by Marcel & Izael V0.01");
-
+		stage.setResizable(false);
 //		this.stage.getIcons().add(new Image("file:resources/images/NetflixLogo.png"));
 
 		initRootLayout();
